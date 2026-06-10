@@ -1,0 +1,125 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../config/site';
+import { personSchema, webSiteSchema, professionalServiceSchema } from '../lib/seo';
+
+const servicios = (await getCollection('servicios')).sort(
+  (a, b) => a.data.orden - b.data.orden
+);
+
+const schemas = [personSchema(), webSiteSchema(), professionalServiceSchema()];
+
+const proceso = [
+  { n: '01', t: 'Diagnóstico', d: 'Analizo tu situación digital actual y tus objetivos reales de negocio.' },
+  { n: '02', t: 'Estrategia', d: 'Defino un plan priorizado: qué hacer, en qué orden y cómo se mide.' },
+  { n: '03', t: 'Ejecución', d: 'Implementamos juntos o acompaño a tu equipo paso a paso.' },
+  { n: '04', t: 'Resultados', d: 'Medimos, iteramos y escalamos lo que funciona.' },
+];
+---
+
+<BaseLayout
+  title={`${SITE.nombre} — ${SITE.rol}`}
+  description={SITE.descripcion}
+  path="/"
+  schemas={schemas}
+>
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-accent-50/60 to-surface"></div>
+    <div class="mx-auto max-w-(--spacing-content) px-5 py-20 md:py-28">
+      <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-sm font-medium text-accent-700">
+        <span class="h-2 w-2 rounded-full bg-accent-500"></span>
+        {SITE.rol}
+      </p>
+      <h1 class="max-w-3xl text-4xl font-extrabold leading-[1.1] tracking-tight text-ink-900 md:text-6xl">
+        {SITE.tagline}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-ink-700">
+        Soy {SITE.nombre}. Acompaño a empresas y profesionales a convertir su
+        presencia digital en un canal real de clientes, con estrategia, SEO y
+        contenido medible.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a
+          href="/contacto"
+          class="rounded-lg bg-accent-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-700"
+        >
+          Agenda una consulta
+        </a>
+        <a
+          href="/servicios"
+          class="rounded-lg border border-line bg-surface px-6 py-3 font-semibold text-ink-800 transition-colors hover:bg-surface-alt"
+        >
+          Ver servicios
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="mx-auto max-w-(--spacing-content) px-5 py-16">
+    <div class="reveal max-w-2xl">
+      <h2 class="text-3xl font-bold tracking-tight text-ink-900">Cómo puedo ayudarte</h2>
+      <p class="mt-3 text-ink-700">
+        Servicios diseñados para que tu inversión digital tenga dirección y retorno.
+      </p>
+    </div>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        servicios.map((s) => (
+          <a
+            href={`/servicios/${s.id}`}
+            class="reveal group flex flex-col rounded-2xl border border-line bg-surface p-6 transition-all hover:-translate-y-1 hover:border-accent-500/40 hover:shadow-lg"
+          >
+            <span class="grid h-12 w-12 place-items-center rounded-xl bg-accent-50 text-accent-700">
+              <Icon name={s.data.icono} />
+            </span>
+            <h3 class="mt-4 font-semibold text-ink-900">{s.data.titulo}</h3>
+            <p class="mt-2 flex-1 text-sm text-muted">{s.data.resumen}</p>
+            <span class="mt-4 text-sm font-medium text-accent-700 group-hover:underline">
+              Saber más →
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="bg-surface-alt">
+    <div class="mx-auto max-w-(--spacing-content) px-5 py-16">
+      <h2 class="reveal text-3xl font-bold tracking-tight text-ink-900">Cómo trabajamos juntos</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          proceso.map((p) => (
+            <div class="reveal rounded-2xl border border-line bg-surface p-6">
+              <span class="text-2xl font-extrabold text-accent-500">{p.n}</span>
+              <h3 class="mt-2 font-semibold text-ink-900">{p.t}</h3>
+              <p class="mt-1 text-sm text-muted">{p.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="mx-auto max-w-(--spacing-content) px-5 py-20">
+    <div class="reveal overflow-hidden rounded-3xl bg-ink-900 px-8 py-14 text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-white md:text-4xl">
+        ¿Listo para crecer con un plan claro?
+      </h2>
+      <p class="mx-auto mt-4 max-w-xl text-ink-700/90 text-slate-300">
+        Conversemos sobre tu negocio y te doy una primera lectura honesta, sin compromiso.
+      </p>
+      <a
+        href="/contacto"
+        class="mt-8 inline-block rounded-lg bg-accent-500 px-8 py-3.5 font-semibold text-ink-950 transition-colors hover:bg-accent-600 hover:text-white"
+      >
+        Trabajemos juntos
+      </a>
+    </div>
+  </section>
+</BaseLayout>

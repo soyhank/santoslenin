@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../config/site';
+import { personSchema, breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  personSchema(),
+  breadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'Sobre mí', path: '/sobre-mi' },
+  ]),
+];
+
+// [COMPLETAR] Ajusta estos valores con tu trayectoria real.
+const valores = [
+  { t: 'Honestidad', d: 'Te digo lo que funciona y lo que no, aunque no sea lo que quieres oír.' },
+  { t: 'Claridad', d: 'Sin tecnicismos vacíos: estrategias que entiendes y puedes seguir.' },
+  { t: 'Resultados', d: 'Mido todo contra objetivos de negocio, no métricas de vanidad.' },
+];
+---
+
+<BaseLayout
+  title={`Sobre mí — ${SITE.nombre}`}
+  description={`Conoce a ${SITE.nombre}, ${SITE.rol.toLowerCase()}. Mi enfoque, mi historia y cómo ayudo a negocios a crecer en digital.`}
+  path="/sobre-mi"
+  schemas={schemas}
+>
+  <section class="mx-auto max-w-(--spacing-content) px-5 py-16">
+    <nav aria-label="Migas de pan" class="mb-6 text-sm text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> <span aria-hidden="true">/</span>
+      <span class="text-ink-800">Sobre mí</span>
+    </nav>
+
+    <div class="grid gap-12 lg:grid-cols-[300px_1fr] lg:items-start">
+      <div class="lg:sticky lg:top-24">
+        <!-- [COMPLETAR] Reemplaza por tu foto real en /public/foto.jpg -->
+        <div class="grid aspect-square place-items-center rounded-3xl bg-gradient-to-br from-ink-900 to-ink-700 text-5xl font-extrabold text-white">
+          LS
+        </div>
+        <p class="mt-4 text-center text-sm text-muted">{SITE.rol}</p>
+      </div>
+
+      <div>
+        <h1 class="text-4xl font-extrabold tracking-tight text-ink-900 md:text-5xl">
+          Hola, soy {SITE.nombre}
+        </h1>
+        <div class="prose mt-6">
+          <p>
+            <strong>[COMPLETAR tu historia]</strong> Soy {SITE.rol.toLowerCase()} con
+            experiencia ayudando a negocios y profesionales a ordenar su presencia
+            digital y convertirla en un canal real de clientes.
+          </p>
+          <p>
+            Trabajo desde una idea simple: el marketing no es magia ni modas, es
+            método. Diagnóstico, estrategia, ejecución y medición. Mi objetivo no es
+            que dependas de mí para siempre, sino que tu negocio crezca con bases sólidas.
+          </p>
+          <p>
+            <em
+              >Personaliza esta sección con tu trayectoria real: años de experiencia,
+              clientes o sectores con los que has trabajado, formación y logros
+              concretos. Esto refuerza tu E-E-A-T de cara a Google y la confianza de
+              quien te lee.</em
+            >
+          </p>
+        </div>
+
+        <h2 class="mt-12 text-2xl font-bold text-ink-900">En qué creo</h2>
+        <div class="mt-6 grid gap-5 sm:grid-cols-3">
+          {
+            valores.map((v) => (
+              <div class="rounded-2xl border border-line bg-surface p-5">
+                <Icon name="star" class="h-6 w-6 text-accent-600" />
+                <h3 class="mt-3 font-semibold text-ink-900">{v.t}</h3>
+                <p class="mt-1 text-sm text-muted">{v.d}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="mt-12 rounded-2xl bg-surface-alt p-7">
+          <h2 class="text-xl font-bold text-ink-900">¿Trabajamos juntos?</h2>
+          <p class="mt-2 text-ink-700">
+            Si tienes un proyecto o una duda, escríbeme y vemos cómo puedo ayudarte.
+          </p>
+          <a
+            href="/contacto"
+            class="mt-5 inline-block rounded-lg bg-accent-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-700"
+          >
+            Contáctame
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
