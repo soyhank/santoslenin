@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PortfolioCard from '../../components/PortfolioCard.astro';
+import { breadcrumbSchema } from '../../lib/seo';
+
+const proyectos = (await getCollection('portafolio')).sort((a, b) => a.data.orden - b.data.orden);
+
+const schemas = [
+  breadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'Portafolio', path: '/portafolio' },
+  ]),
+];
+---
+
+<BaseLayout
+  title="Portafolio de proyectos de marketing"
+  description="Proyectos de marketing digital y performance liderados por Santos Lenin Vilcachagua Ayala: B2B Autodesk, financiero, expansión a EE. UU. y educación."
+  path="/portafolio"
+  schemas={schemas}
+>
+  <section class="mx-auto max-w-(--spacing-content) px-5 py-16">
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <span class="text-ink-800">Portafolio</span>
+    </nav>
+
+    <div class="max-w-2xl">
+      <p class="eyebrow">Portafolio</p>
+      <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-ink-900 md:text-5xl">
+        Proyectos liderados y concluidos
+      </h1>
+      <p class="mt-4 text-lg text-ink-700">
+        Una selección de proyectos de marketing digital y performance que ejecuté y cerré.
+        Cada uno se presenta con su contexto, estrategia, ejecución y resultados.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {proyectos.map((p) => <PortfolioCard proyecto={p} />)}
+    </div>
+  </section>
+</BaseLayout>

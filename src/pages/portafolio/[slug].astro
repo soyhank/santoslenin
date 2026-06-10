@@ -1,0 +1,87 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { articleSchema, breadcrumbSchema } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const proyectos = await getCollection('portafolio');
+  return proyectos.map((proyecto) => ({ params: { slug: proyecto.id }, props: { proyecto } }));
+}
+
+const { proyecto } = Astro.props;
+const { Content } = await render(proyecto);
+const d = proyecto.data;
+const path = `/portafolio/${proyecto.id}`;
+
+const schemas = [
+  articleSchema({ title: d.title, description: d.description, path, pubDate: d.pubDate, updatedDate: d.updatedDate }),
+  breadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'Portafolio', path: '/portafolio' },
+    { name: d.empresa, path },
+  ]),
+];
+
+// Proyecto siguiente para navegación
+const todos = (await getCollection('portafolio')).sort((a, b) => a.data.orden - b.data.orden);
+const idx = todos.findIndex((p) => p.id === proyecto.id);
+const siguiente = todos[(idx + 1) % todos.length];
+---
+
+<BaseLayout title={d.title} description={d.description} path={path} type="article" schemas={schemas}>
+  <article class="mx-auto max-w-3xl px-5 py-16">
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/portafolio" class="hover:text-accent-700">Portafolio</a> /
+      <span class="text-ink-800">{d.empresa}</span>
+    </nav>
+
+    <p class="eyebrow">{d.sector}</p>
+    <h1 class="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-ink-900">{d.title}</h1>
+
+    <dl class="mt-6 grid gap-4 rounded-2xl border border-line bg-surface-alt p-6 sm:grid-cols-3">
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-wide text-muted">Empresa</dt>
+        <dd class="mt-1 font-medium text-ink-900">{d.empresa}</dd>
+      </div>
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-wide text-muted">Rol</dt>
+        <dd class="mt-1 font-medium text-ink-900">{d.rol}</dd>
+      </div>
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-wide text-muted">Periodo</dt>
+        <dd class="mt-1 font-medium text-ink-900">{d.periodo}</dd>
+      </div>
+    </dl>
+
+    <div class="mt-5 flex flex-wrap gap-2">
+      {d.chips.map((chip) => <span class="chip chip-strong">{chip}</span>)}
+    </div>
+
+    {
+      d.stack.length > 0 && (
+        <div class="mt-4 flex flex-wrap items-center gap-2">
+          <span class="font-mono text-xs text-muted">Stack:</span>
+          {d.stack.map((s) => <span class="chip">{s}</span>)}
+        </div>
+      )
+    }
+
+    <div class="prose mt-10">
+      <Content />
+    </div>
+
+    <!-- Navegación entre proyectos -->
+    <div class="mt-14 flex items-center justify-between gap-4 border-t border-line pt-6">
+      <a href="/portafolio" class="text-sm font-medium text-muted hover:text-accent-700">← Todos los proyectos</a>
+      <a href={`/portafolio/${siguiente.id}`} class="text-right text-sm font-medium text-accent-700 hover:underline">
+        Siguiente: {siguiente.data.empresa} →
+      </a>
+    </div>
+
+    <div class="mt-10 rounded-2xl bg-ink-900 px-7 py-10 text-center">
+      <h2 class="font-display text-2xl font-bold text-white">¿Tienes un reto de marketing parecido?</h2>
+      <p class="mx-auto mt-2 max-w-md text-slate-300">Conversemos sobre cómo lo abordaría en tu contexto.</p>
+      <a href="/contacto" class="mt-6 inline-block rounded-lg bg-accent-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-600">Contacto</a>
+    </div>
+  </article>
+</BaseLayout>
