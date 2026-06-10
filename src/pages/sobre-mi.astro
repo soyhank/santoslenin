@@ -2,95 +2,152 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import { SITE } from '../config/site';
-import { personSchema, breadcrumbSchema } from '../lib/seo';
+import { personSchema, profilePageSchema, breadcrumbSchema } from '../lib/seo';
 
 const schemas = [
   personSchema(),
+  profilePageSchema('/sobre-mi'),
   breadcrumbSchema([
     { name: 'Inicio', path: '/' },
     { name: 'Sobre mí', path: '/sobre-mi' },
   ]),
 ];
 
-// [COMPLETAR] Ajusta estos valores con tu trayectoria real.
-const valores = [
-  { t: 'Honestidad', d: 'Te digo lo que funciona y lo que no, aunque no sea lo que quieres oír.' },
-  { t: 'Claridad', d: 'Sin tecnicismos vacíos: estrategias que entiendes y puedes seguir.' },
-  { t: 'Resultados', d: 'Mido todo contra objetivos de negocio, no métricas de vanidad.' },
+const credenciales = [
+  { titulo: 'Maestría en Marketing y Gestión Comercial', entidad: 'Universidad Privada del Norte (UPN)', anio: '2025' },
+  { titulo: 'Administración de Empresas', entidad: 'Universidad Nacional del Callao', anio: '' },
+  { titulo: 'Marketing Analytics', entidad: 'DMC Perú', anio: '' },
+  { titulo: 'Inglés B2/C1 — TOEFL ITP 650', entidad: 'Certificación de idioma', anio: '2025' },
+  { titulo: 'Docente universitario', entidad: 'USIL', anio: '2022–2025' },
+  { titulo: 'Docente', entidad: 'Instituto SISE', anio: '2022–2026' },
+];
+
+const focos = [
+  { eyebrow: 'IA aplicada', titulo: 'Implementación de IA y automatización', chips: ['Claude Code', 'LLMs', 'Python', 'SQL', 'Zapier'] },
+  { eyebrow: 'Performance', titulo: 'Adquisición y embudos de conversión', chips: ['Meta Ads', 'Google Ads', 'LinkedIn Ads'] },
+  { eyebrow: 'Analítica', titulo: 'Medición y reporte de marketing', chips: ['Looker Studio', 'Power BI', 'HubSpot'] },
 ];
 ---
 
 <BaseLayout
-  title={`Sobre mí — ${SITE.nombre}`}
-  description={`Conoce a ${SITE.nombre}, ${SITE.rol.toLowerCase()}. Mi enfoque, mi historia y cómo ayudo a negocios a crecer en digital.`}
+  title="Sobre mí"
+  description="Santos Lenin Vilcachagua Ayala: especialista en marketing digital y performance, docente universitario. +5 años liderando proyectos en B2B, financiero y educación."
   path="/sobre-mi"
+  type="profile"
   schemas={schemas}
 >
   <section class="mx-auto max-w-(--spacing-content) px-5 py-16">
-    <nav aria-label="Migas de pan" class="mb-6 text-sm text-muted">
-      <a href="/" class="hover:text-accent-700">Inicio</a> <span aria-hidden="true">/</span>
-      <span class="text-ink-800">Sobre mí</span>
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <span class="text-ink-800">Sobre mí</span>
     </nav>
 
     <div class="grid gap-12 lg:grid-cols-[300px_1fr] lg:items-start">
       <div class="lg:sticky lg:top-24">
-        <!-- [COMPLETAR] Reemplaza por tu foto real en /public/foto.jpg -->
-        <div class="grid aspect-square place-items-center rounded-3xl bg-gradient-to-br from-ink-900 to-ink-700 text-5xl font-extrabold text-white">
-          LS
+        <!-- [TODO_SANTOS: reemplazar por foto profesional en /public/santos-lenin-vilcachagua.jpg] -->
+        <div class="aspect-[4/5] overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-ink-900 to-accent-700">
+          <div class="flex h-full flex-col items-center justify-center gap-2 text-white">
+            <span class="font-display text-5xl font-bold">SLV</span>
+            <span class="font-mono text-xs text-white/80">Lima · Perú</span>
+          </div>
         </div>
-        <p class="mt-4 text-center text-sm text-muted">{SITE.rol}</p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <span class="chip">+5 años</span>
+          <span class="chip">Equipos ×12</span>
+          <span class="chip">S/500K</span>
+        </div>
+        <a href="/cv" class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-line bg-surface-pure px-5 py-3 font-semibold text-ink-800 transition-colors hover:bg-surface-alt">
+          <Icon name="download" class="h-4 w-4" /> Ver mi CV
+        </a>
       </div>
 
       <div>
-        <h1 class="text-4xl font-extrabold tracking-tight text-ink-900 md:text-5xl">
-          Hola, soy {SITE.nombre}
+        <p class="eyebrow">Sobre mí</p>
+        <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-ink-900 md:text-5xl">
+          {SITE.nombre}
         </h1>
-        <div class="prose mt-6">
+        <p class="mt-3 text-lg text-accent-700">{SITE.rol} · Docente universitario</p>
+
+        <div class="prose mt-8">
           <p>
-            <strong>[COMPLETAR tu historia]</strong> Soy {SITE.rol.toLowerCase()} con
-            experiencia ayudando a negocios y profesionales a ordenar su presencia
-            digital y convertirla en un canal real de clientes.
+            Soy administrador de empresas por la Universidad Nacional del Callao y obtuve mi
+            Maestría en Marketing y Gestión Comercial en la Universidad Privada del Norte en
+            2025. A lo largo de más de cinco años me he especializado en marketing digital y
+            performance marketing, liderando equipos y presupuestos en sectores muy distintos:
+            tecnología B2B, financiero e inmobiliario, educación y servicios.
           </p>
           <p>
-            Trabajo desde una idea simple: el marketing no es magia ni modas, es
-            método. Diagnóstico, estrategia, ejecución y medición. Mi objetivo no es
-            que dependas de mí para siempre, sino que tu negocio crezca con bases sólidas.
+            Como Jefe de Marketing dirigí equipos de hasta doce personas y gestioné presupuestos
+            de hasta S/500,000. Aprendí que mi trabajo no era "hacer campañas", sino construir
+            sistemas de adquisición que el negocio pudiera medir y sostener. Por eso, en cada
+            proyecto, ordené el embudo, definí las métricas que importaban y alineé al equipo
+            comercial alrededor de los mismos objetivos.
           </p>
           <p>
-            <em
-              >Personaliza esta sección con tu trayectoria real: años de experiencia,
-              clientes o sectores con los que has trabajado, formación y logros
-              concretos. Esto refuerza tu E-E-A-T de cara a Google y la confianza de
-              quien te lee.</em
-            >
+            En <strong>SemcoCAD</strong>, Gold Partner de Autodesk en Perú, lideré la estrategia
+            B2B para software CAD/BIM: generación de leads en Google Ads y LinkedIn Ads y
+            dashboards en Looker Studio que dieron visibilidad de extremo a extremo al embudo
+            comercial. En <strong>Activa Capital</strong> construí embudos en Meta Ads para
+            productos financieros e inmobiliarios, donde la calidad del lead y la velocidad de
+            contacto definían la conversión. En <strong>Compass For Business</strong> dirigí la
+            expansión hacia el mercado hispano de Estados Unidos en el sector home improvements,
+            liderando un equipo de diez personas con metodología SCRUM. También conduje proyectos
+            de marketing y posicionamiento para <strong>Academia Vonex</strong>, <strong>ESEP</strong>
+            y <strong>Dacartelecom</strong>. Todos fueron proyectos que ejecuté y concluí.
+          </p>
+          <p>
+            En paralelo a la práctica, ejercí la docencia. Entre 2022 y 2025 fui docente
+            universitario en la USIL, y entre 2022 y 2026 enseñé en el Instituto SISE, en cursos
+            de Marketing Digital, Marketing de Contenidos, Trade Marketing, Shopper Marketing y
+            BTL. Enseñar me obligó a estructurar lo que sabía y me mantuvo cerca de las nuevas
+            generaciones de profesionales de marketing.
+          </p>
+          <p>
+            Mi foco actual está en la <strong>inteligencia artificial aplicada al marketing</strong>:
+            implementación de IA con herramientas como Claude Code y LLMs, automatización con
+            Zapier, Python y SQL, y analítica de marketing —un terreno que profundicé con mi
+            formación en Marketing Analytics en DMC Perú—. Creo que la IA no reemplaza el criterio
+            del marketero, lo amplifica: permite investigar más rápido, automatizar lo repetitivo
+            y dedicar el tiempo a lo que de verdad mueve resultados.
+          </p>
+          <p>
+            Trabajo en español y en inglés (nivel B2/C1, TOEFL ITP 650 en 2025). Si buscas a
+            alguien que combine estrategia, ejecución de performance y una mirada práctica de la
+            IA aplicada al marketing, <a href="/contacto">conversemos</a>.
           </p>
         </div>
 
-        <h2 class="mt-12 text-2xl font-bold text-ink-900">En qué creo</h2>
+        <h2 class="mt-14 font-display text-2xl font-bold text-ink-900">Áreas de especialización</h2>
         <div class="mt-6 grid gap-5 sm:grid-cols-3">
           {
-            valores.map((v) => (
-              <div class="rounded-2xl border border-line bg-surface p-5">
-                <Icon name="star" class="h-6 w-6 text-accent-600" />
-                <h3 class="mt-3 font-semibold text-ink-900">{v.t}</h3>
-                <p class="mt-1 text-sm text-muted">{v.d}</p>
+            focos.map((f) => (
+              <div class="rounded-2xl border border-line bg-surface-pure p-5">
+                <p class="eyebrow">{f.eyebrow}</p>
+                <h3 class="mt-2 font-display text-base font-semibold text-ink-900">{f.titulo}</h3>
+                <div class="mt-3 flex flex-wrap gap-2">
+                  {f.chips.map((c) => <span class="chip">{c}</span>)}
+                </div>
               </div>
             ))
           }
         </div>
 
-        <div class="mt-12 rounded-2xl bg-surface-alt p-7">
-          <h2 class="text-xl font-bold text-ink-900">¿Trabajamos juntos?</h2>
-          <p class="mt-2 text-ink-700">
-            Si tienes un proyecto o una duda, escríbeme y vemos cómo puedo ayudarte.
-          </p>
-          <a
-            href="/contacto"
-            class="mt-5 inline-block rounded-lg bg-accent-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-700"
-          >
-            Contáctame
-          </a>
-        </div>
+        <h2 class="mt-14 font-display text-2xl font-bold text-ink-900">Credenciales</h2>
+        <ul class="mt-6 divide-y divide-line border-y border-line">
+          {
+            credenciales.map((c) => (
+              <li class="flex items-start justify-between gap-4 py-4">
+                <div>
+                  <p class="font-medium text-ink-900">{c.titulo}</p>
+                  <p class="text-sm text-muted">{c.entidad}</p>
+                </div>
+                {c.anio && <span class="shrink-0 font-mono text-xs text-accent-700">{c.anio}</span>}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-4 text-sm text-muted">
+          El detalle completo de mi formación y experiencia está en mi <a href="/cv" class="font-medium text-accent-700 hover:underline">CV</a>.
+        </p>
       </div>
     </div>
   </section>

@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { SITE } from '../config/site';
+import { personSchema, breadcrumbSchema } from '../lib/seo';
+
+const schemas = [
+  personSchema(),
+  breadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'CV', path: '/cv' },
+  ]),
+];
+
+const experiencia = [
+  {
+    empresa: 'SemcoCAD',
+    rol: 'Jefe de Marketing',
+    sector: 'Tecnología B2B · Software CAD/BIM (Gold Partner de Autodesk en Perú)',
+    puntos: [
+      'Lideré la estrategia de generación de demanda B2B para software CAD/BIM.',
+      'Dirigí campañas de lead generation en Google Ads y LinkedIn Ads.',
+      'Implementé dashboards en Looker Studio para el embudo comercial completo.',
+    ],
+    href: '/portafolio/semcocad-b2b-autodesk',
+  },
+  {
+    empresa: 'Activa Capital Perú',
+    rol: 'Jefe de Marketing',
+    sector: 'Financiero · Inmobiliario',
+    puntos: [
+      'Construí embudos de conversión en Meta Ads para productos financieros e inmobiliarios.',
+      'Coordiné con el equipo comercial para mejorar la tasa de contacto de leads.',
+    ],
+    href: '/portafolio/activa-capital-embudos-meta',
+  },
+  {
+    empresa: 'Compass For Business',
+    rol: 'Líder de Marketing · Dirección de equipo',
+    sector: 'Home improvements · Mercado hispano de EE. UU.',
+    puntos: [
+      'Dirigí la expansión digital al mercado hispano de Estados Unidos con SEO y SEM.',
+      'Lideré un equipo de 10 personas bajo metodología SCRUM.',
+    ],
+    href: '/portafolio/compass-expansion-eeuu',
+  },
+  {
+    empresa: 'Academia Vonex',
+    rol: 'Jefe de Marketing',
+    sector: 'Educación',
+    puntos: [
+      'Lideré el sitio web con enfoque UX/SEO y el posicionamiento orgánico.',
+      'Ejecuté campañas de Meta Ads y email marketing con eficiencia presupuestal.',
+    ],
+    href: '/portafolio/vonex-web-seo',
+  },
+  {
+    empresa: 'ESEP',
+    rol: 'Marketing',
+    sector: 'Educación · Servicios',
+    puntos: ['Lideré proyectos de marketing digital y captación.'],
+    href: '',
+  },
+  {
+    empresa: 'Dacartelecom',
+    rol: 'Marketing',
+    sector: 'Servicios · Telecomunicaciones',
+    puntos: ['Ejecuté proyectos de marketing digital y performance.'],
+    href: '',
+  },
+];
+
+const docencia = [
+  { entidad: 'USIL — Universidad', periodo: '2022–2025', cursos: 'Marketing Digital, Marketing de Contenidos, Trade Marketing, Shopper Marketing, BTL' },
+  { entidad: 'Instituto SISE', periodo: '2022–2026', cursos: 'Marketing Digital, Marketing de Contenidos, Trade Marketing, Shopper Marketing, BTL' },
+];
+
+const educacion = [
+  { titulo: 'Maestría en Marketing y Gestión Comercial', entidad: 'Universidad Privada del Norte (UPN)', anio: '2025' },
+  { titulo: 'Administración de Empresas', entidad: 'Universidad Nacional del Callao', anio: '' },
+  { titulo: 'Marketing Analytics', entidad: 'DMC Perú', anio: '' },
+];
+
+const skills = {
+  'Inteligencia artificial': ['Claude Code', 'LLMs', 'Python', 'SQL', 'Zapier'],
+  'Performance marketing': ['Meta Ads', 'Google Ads', 'LinkedIn Ads'],
+  'Analítica': ['Looker Studio', 'Power BI', 'HubSpot'],
+  'Disciplinas': ['SEO', 'GEO/AEO', 'Trade Marketing', 'Shopper Marketing', 'BTL'],
+};
+---
+
+<BaseLayout
+  title="CV"
+  description="Currículum de Santos Lenin Vilcachagua Ayala: especialista en marketing digital y performance, docente universitario. Experiencia, formación y stack."
+  path="/cv"
+  schemas={schemas}
+>
+  <section class="mx-auto max-w-3xl px-5 py-16">
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <span class="text-ink-800">CV</span>
+    </nav>
+
+    <header class="flex flex-wrap items-start justify-between gap-6 border-b border-line pb-8">
+      <div>
+        <h1 class="font-display text-4xl font-bold tracking-tight text-ink-900">{SITE.nombre}</h1>
+        <p class="mt-2 text-lg text-accent-700">{SITE.rol}</p>
+        <p class="mt-1 text-muted">Docente universitario · Lima, Perú</p>
+        <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-muted">
+          <a href={`mailto:${SITE.email}`} class="inline-flex items-center gap-1.5 hover:text-accent-700"><Icon name="mail" class="h-3.5 w-3.5" /> {SITE.email}</a>
+          <a href={SITE.redes.linkedin} target="_blank" rel="me noopener" class="inline-flex items-center gap-1.5 hover:text-accent-700"><Icon name="linkedin" class="h-3.5 w-3.5" /> LinkedIn</a>
+        </div>
+      </div>
+      <!-- [TODO_SANTOS: subir PDF actualizado del CV en /public/cv-santos-lenin-vilcachagua.pdf] -->
+      <a
+        href="/cv-santos-lenin-vilcachagua.pdf"
+        class="inline-flex items-center gap-2 rounded-lg bg-accent-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-700"
+      >
+        <Icon name="download" class="h-4 w-4" /> Descargar PDF
+      </a>
+    </header>
+
+    <section class="mt-10">
+      <h2 class="eyebrow">Perfil</h2>
+      <p class="mt-3 text-ink-700">
+        Especialista en marketing digital y performance marketing con más de cinco años
+        liderando proyectos en tecnología B2B, sector financiero/inmobiliario, educación y
+        servicios. Dirigí equipos de hasta 12 personas y presupuestos de hasta S/500,000.
+        Docente universitario y especialista en inteligencia artificial aplicada al marketing,
+        automatización y analítica.
+      </p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="eyebrow">Experiencia · proyectos liderados</h2>
+      <div class="mt-4 space-y-7">
+        {
+          experiencia.map((e) => (
+            <article>
+              <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 class="font-display text-lg font-semibold text-ink-900">
+                  {e.rol} — {e.empresa}
+                </h3>
+              </div>
+              <p class="text-sm text-muted">{e.sector}</p>
+              <ul class="mt-2 list-disc space-y-1 pl-5 text-ink-700">
+                {e.puntos.map((p) => <li>{p}</li>)}
+              </ul>
+              {e.href && (
+                <a href={e.href} class="mt-1 inline-block text-sm font-medium text-accent-700 hover:underline">
+                  Ver caso en el portafolio →
+                </a>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="eyebrow">Docencia</h2>
+      <div class="mt-4 space-y-4">
+        {
+          docencia.map((d) => (
+            <article>
+              <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 class="font-display font-semibold text-ink-900">{d.entidad}</h3>
+                <span class="font-mono text-xs text-accent-700">{d.periodo}</span>
+              </div>
+              <p class="text-sm text-muted">{d.cursos}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="eyebrow">Educación</h2>
+      <ul class="mt-4 divide-y divide-line border-y border-line">
+        {
+          educacion.map((e) => (
+            <li class="flex items-start justify-between gap-4 py-3">
+              <div>
+                <p class="font-medium text-ink-900">{e.titulo}</p>
+                <p class="text-sm text-muted">{e.entidad}</p>
+              </div>
+              {e.anio && <span class="shrink-0 font-mono text-xs text-accent-700">{e.anio}</span>}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="eyebrow">Habilidades y stack</h2>
+      <div class="mt-4 space-y-4">
+        {
+          Object.entries(skills).map(([grupo, items]) => (
+            <div>
+              <p class="text-sm font-semibold text-ink-900">{grupo}</p>
+              <div class="mt-2 flex flex-wrap gap-2">
+                {items.map((i) => <span class="chip">{i}</span>)}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="eyebrow">Idiomas</h2>
+      <ul class="mt-3 space-y-1 text-ink-700">
+        <li>Español — nativo</li>
+        <li>Inglés — B2/C1 (TOEFL ITP 650, 2025)</li>
+      </ul>
+    </section>
+  </section>
+</BaseLayout>
