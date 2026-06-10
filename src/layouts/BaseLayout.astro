@@ -43,23 +43,33 @@ const props = Astro.props;
     <Footer />
 
     <script is:inline>
-      document.documentElement.classList.add('js');
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const e of entries) {
-              if (e.isIntersecting) {
-                e.target.classList.add('is-visible');
-                io.unobserve(e.target);
+      (function () {
+        var els = document.querySelectorAll('.reveal');
+        var revealAll = function () {
+          for (var i = 0; i < els.length; i++) els[i].classList.add('is-visible');
+        };
+        document.documentElement.classList.add('js');
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced || !('IntersectionObserver' in window)) {
+          revealAll();
+          return;
+        }
+        var io = new IntersectionObserver(
+          function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+              if (entries[i].isIntersecting) {
+                entries[i].target.classList.add('is-visible');
+                io.unobserve(entries[i].target);
               }
             }
           },
-          { rootMargin: '0px 0px -10% 0px' }
+          { rootMargin: '0px 0px -8% 0px' }
         );
-        document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-      } else {
-        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
-      }
+        els.forEach(function (el) { io.observe(el); });
+        // Red de seguridad: si algún elemento nunca entra al viewport (agentes que no
+        // hacen scroll: renderizadores, crawlers, capturas), revelarlo igual.
+        setTimeout(revealAll, 2200);
+      })();
     </script>
   </body>
 </html>
