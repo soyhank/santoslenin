@@ -1,22 +1,16 @@
 ---
 import { SITE, NAV } from '../config/site';
+import Icon from './Icon.astro';
 const year = new Date().getFullYear();
-
-const redes = [
-  { key: 'linkedin', label: 'LinkedIn', url: SITE.redes.linkedin },
-  { key: 'instagram', label: 'Instagram', url: SITE.redes.instagram },
-  { key: 'x', label: 'X', url: SITE.redes.x },
-  { key: 'youtube', label: 'YouTube', url: SITE.redes.youtube },
-  { key: 'github', label: 'GitHub', url: SITE.redes.github },
-].filter((r) => r.url);
 ---
 
 <footer class="mt-24 border-t border-line bg-surface-alt">
   <div class="mx-auto max-w-(--spacing-content) px-5 py-12">
     <div class="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
       <div>
-        <p class="font-semibold text-ink-900">{SITE.marca}</p>
-        <p class="mt-2 max-w-xs text-sm text-muted">{SITE.tagline}</p>
+        <p class="font-display font-bold text-ink-900">{SITE.nombre}</p>
+        <p class="mt-2 max-w-xs text-sm text-muted">{SITE.rol}</p>
+        <p class="mt-3 font-mono text-xs text-muted">Lima · Perú</p>
       </div>
 
       <nav aria-label="Enlaces del pie">
@@ -36,37 +30,29 @@ const redes = [
 
       <div>
         <p class="text-sm font-semibold text-ink-900">Conecta</p>
-        <ul class="mt-3 space-y-2">
-          {
-            SITE.email && (
-              <li>
-                <a href={`mailto:${SITE.email}`} class="text-sm text-muted hover:text-accent-700">
-                  {SITE.email}
-                </a>
-              </li>
-            )
-          }
-          {
-            redes.map((r) => (
-              <li>
-                <a
-                  href={r.url}
-                  rel="me noopener"
-                  target="_blank"
-                  class="text-sm text-muted hover:text-accent-700"
-                >
-                  {r.label}
-                </a>
-              </li>
-            ))
-          }
+        <ul class="mt-3 space-y-2.5">
+          <li>
+            <a href={`mailto:${SITE.email}`} class="inline-flex items-center gap-2 text-sm text-muted hover:text-accent-700">
+              <Icon name="mail" class="h-4 w-4" /> {SITE.email}
+            </a>
+          </li>
+          <li>
+            <a href={SITE.redes.linkedin} target="_blank" rel="me noopener" class="inline-flex items-center gap-2 text-sm text-muted hover:text-accent-700">
+              <Icon name="linkedin" class="h-4 w-4" /> LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={SITE.redes.youtube} target="_blank" rel="me noopener" class="inline-flex items-center gap-2 text-sm text-muted hover:text-accent-700">
+              <Icon name="youtube" class="h-4 w-4" /> YouTube
+            </a>
+          </li>
         </ul>
       </div>
     </div>
 
     <div class="mt-10 flex flex-col gap-2 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
       <p>© {year} {SITE.nombre}. Todos los derechos reservados.</p>
-      <p>Hecho con Astro · Optimizado para SEO</p>
+      <p class="font-mono">santoslenin.com</p>
     </div>
   </div>
 </footer>

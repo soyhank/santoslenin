@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  cluster: 'ia-marketing' | 'geo-aeo';
+  /** id del post o pilar actual, para excluirlo. */
+  currentId?: string;
+}
+const { cluster, currentId } = Astro.props;
+
+const pilarInfo = {
+  'ia-marketing': { href: '/ia-en-marketing', label: 'Inteligencia artificial aplicada al marketing' },
+  'geo-aeo': { href: '/geo-aeo', label: 'GEO y AEO: posicionamiento en motores de IA' },
+}[cluster];
+
+const relacionados = (await getCollection('blog', ({ data }) => !data.draft && !data.pillar && data.cluster === cluster))
+  .filter((p) => p.id !== currentId)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3);
+---
+
+<section class="mt-14 rounded-2xl border border-line bg-surface-alt p-7">
+  <p class="eyebrow">Sigue explorando · {cluster === 'ia-marketing' ? 'IA en marketing' : 'GEO / AEO'}</p>
+
+  <a href={pilarInfo.href} class="mt-3 block font-display text-lg font-semibold text-ink-900 hover:text-accent-700">
+    📌 Guía pilar: {pilarInfo.label} →
+  </a>
+
+  {
+    relacionados.length > 0 && (
+      <ul class="mt-5 space-y-3 border-t border-line pt-5">
+        {relacionados.map((p) => (
+          <li>
+            <a href={`/blog/${p.id}`} class="group flex items-baseline gap-2">
+              <span class="font-mono text-xs text-accent-700">→</span>
+              <span class="font-medium text-ink-800 group-hover:text-accent-700">{p.data.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>

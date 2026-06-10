@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  proyecto: CollectionEntry<'portafolio'>;
+}
+const { proyecto } = Astro.props;
+const d = proyecto.data;
+---
+
+<a
+  href={`/portafolio/${proyecto.id}`}
+  class="reveal group flex flex-col rounded-2xl border border-line bg-surface-pure p-6 transition-all hover:-translate-y-1 hover:border-accent-500/50 hover:shadow-lg"
+>
+  <p class="eyebrow">{d.sector}</p>
+  <h3 class="mt-2 font-display text-lg font-semibold leading-snug text-ink-900">
+    {d.title}
+  </h3>
+  <p class="mt-2 flex-1 text-sm text-muted">{d.description}</p>
+  <div class="mt-4 flex flex-wrap gap-2">
+    {d.chips.map((chip) => <span class="chip">{chip}</span>)}
+  </div>
+  <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent-700 group-hover:gap-2.5 transition-all">
+    Ver proyecto
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+  </span>
+</a>

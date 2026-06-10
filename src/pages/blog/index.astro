@@ -3,9 +3,19 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { breadcrumbSchema } from '../../lib/seo';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publicado.getTime() - a.data.publicado.getTime()
+const posts = (await getCollection('blog', ({ data }) => !data.draft && !data.pillar)).sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
+
+const clusterLabel: Record<string, string> = {
+  'ia-marketing': 'IA en marketing',
+  'geo-aeo': 'GEO / AEO',
+};
+
+const pilares = [
+  { href: '/ia-en-marketing', label: 'IA en marketing', desc: 'Guía pilar del cluster de inteligencia artificial aplicada al marketing.' },
+  { href: '/geo-aeo', label: 'GEO / AEO', desc: 'Guía pilar sobre posicionamiento en los motores de búsqueda con IA.' },
+];
 
 const schemas = [
   breadcrumbSchema([
@@ -14,27 +24,43 @@ const schemas = [
   ]),
 ];
 
-const fmt = (d: Date) =>
-  d.toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
+const fmt = (d: Date) => d.toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <BaseLayout
-  title="Blog sobre marketing digital y SEO"
-  description="Artículos prácticos sobre SEO, marketing digital y crecimiento de negocios. Estrategias claras y honestas para aplicar hoy."
+  title="Blog sobre IA en marketing, GEO y AEO"
+  description="Artículos sobre inteligencia artificial aplicada al marketing, GEO y AEO. Estrategias prácticas para posicionar marcas y personas en los motores de IA."
   path="/blog"
   schemas={schemas}
 >
   <section class="mx-auto max-w-(--spacing-content) px-5 py-16">
-    <nav aria-label="Migas de pan" class="mb-6 text-sm text-muted">
-      <a href="/" class="hover:text-accent-700">Inicio</a> <span aria-hidden="true">/</span>
-      <span class="text-ink-800">Blog</span>
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <span class="text-ink-800">Blog</span>
     </nav>
 
-    <h1 class="text-4xl font-extrabold tracking-tight text-ink-900 md:text-5xl">Blog</h1>
-    <p class="mt-4 max-w-2xl text-lg text-ink-700">
-      Ideas prácticas sobre SEO, marketing digital y crecimiento. Sin humo: lo que
-      realmente mueve la aguja.
-    </p>
+    <div class="max-w-2xl">
+      <p class="eyebrow">Blog</p>
+      <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-ink-900 md:text-5xl">
+        IA en marketing, GEO y AEO
+      </h1>
+      <p class="mt-4 text-lg text-ink-700">
+        Dos clusters de contenido: inteligencia artificial aplicada al marketing y el nuevo
+        terreno del posicionamiento en motores de IA (GEO/AEO).
+      </p>
+    </div>
+
+    <!-- Guías pilar -->
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+      {
+        pilares.map((p) => (
+          <a href={p.href} class="group rounded-2xl border border-accent-100 bg-accent-50/50 p-6 transition-all hover:-translate-y-1 hover:shadow-lg">
+            <p class="eyebrow">Guía pilar</p>
+            <h2 class="mt-2 font-display text-lg font-semibold text-ink-900 group-hover:text-accent-700">{p.label}</h2>
+            <p class="mt-2 text-sm text-muted">{p.desc}</p>
+          </a>
+        ))
+      }
+    </div>
 
     {
       posts.length === 0 ? (
@@ -42,25 +68,16 @@ const fmt = (d: Date) =>
       ) : (
         <div class="mt-12 grid gap-6 md:grid-cols-2">
           {posts.map((post) => (
-            <article class="flex flex-col rounded-2xl border border-line bg-surface p-7 transition-shadow hover:shadow-lg">
-              <div class="flex items-center gap-3 text-xs text-muted">
-                <span class="rounded-full bg-accent-50 px-2.5 py-0.5 font-medium text-accent-700">
-                  {post.data.categoria}
-                </span>
-                <time datetime={post.data.publicado.toISOString()}>{fmt(post.data.publicado)}</time>
+            <article class="flex flex-col rounded-2xl border border-line bg-surface-pure p-7 transition-shadow hover:shadow-lg">
+              <div class="flex items-center gap-3 font-mono text-xs text-muted">
+                <span class="rounded bg-accent-50 px-2 py-0.5 font-medium text-accent-700">{clusterLabel[post.data.cluster]}</span>
+                <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
               </div>
-              <h2 class="mt-3 text-xl font-bold text-ink-900">
-                <a href={`/blog/${post.id}`} class="hover:text-accent-700">
-                  {post.data.titulo}
-                </a>
+              <h2 class="mt-3 font-display text-xl font-semibold text-ink-900">
+                <a href={`/blog/${post.id}`} class="hover:text-accent-700">{post.data.title}</a>
               </h2>
-              <p class="mt-2 flex-1 text-sm text-muted">{post.data.descripcion}</p>
-              <a
-                href={`/blog/${post.id}`}
-                class="mt-4 font-medium text-accent-700 hover:underline"
-              >
-                Leer artículo →
-              </a>
+              <p class="mt-2 flex-1 text-sm text-muted">{post.data.description}</p>
+              <a href={`/blog/${post.id}`} class="mt-4 font-medium text-accent-700 hover:underline">Leer artículo →</a>
             </article>
           ))}
         </div>

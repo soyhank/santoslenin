@@ -2,135 +2,81 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import { SITE } from '../config/site';
-import { professionalServiceSchema, breadcrumbSchema, canonical } from '../lib/seo';
-
-// Clave pública de Web3Forms (no es secreta). Configúrala en .env / Vercel.
-const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+import { breadcrumbSchema } from '../lib/seo';
 
 const schemas = [
-  professionalServiceSchema(),
   breadcrumbSchema([
     { name: 'Inicio', path: '/' },
     { name: 'Contacto', path: '/contacto' },
   ]),
 ];
 
-const whatsappUrl = SITE.whatsapp
-  ? `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hola, vengo de tu web y me gustaría conversar.')}`
-  : '';
+const canales = [
+  {
+    icon: 'mail',
+    label: 'Correo',
+    valor: SITE.email,
+    href: `mailto:${SITE.email}`,
+    desc: 'La vía más directa. Respondo personalmente.',
+  },
+  {
+    icon: 'linkedin',
+    label: 'LinkedIn',
+    valor: '/in/santos-lenin-vilcachagua-ayala',
+    href: SITE.redes.linkedin,
+    desc: 'Conectemos y conversemos sobre oportunidades.',
+  },
+  {
+    icon: 'youtube',
+    label: 'YouTube',
+    valor: 'Canal de contenido',
+    href: SITE.redes.youtube,
+    desc: 'Contenido sobre marketing, performance e IA.',
+  },
+];
 ---
 
 <BaseLayout
   title="Contacto"
-  description={`Conversemos sobre tu proyecto. Escríbeme y te respondo con una primera lectura honesta. ${SITE.nombre}, ${SITE.rol.toLowerCase()}.`}
+  description="Conecta con Santos Lenin Vilcachagua Ayala, especialista en marketing digital y performance. Correo y LinkedIn para oportunidades y proyectos."
   path="/contacto"
   schemas={schemas}
 >
   <section class="mx-auto max-w-(--spacing-content) px-5 py-16">
-    <nav aria-label="Migas de pan" class="mb-6 text-sm text-muted">
-      <a href="/" class="hover:text-accent-700">Inicio</a> <span aria-hidden="true">/</span>
-      <span class="text-ink-800">Contacto</span>
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <span class="text-ink-800">Contacto</span>
     </nav>
 
-    <div class="grid gap-12 lg:grid-cols-2">
-      <div>
-        <h1 class="text-4xl font-extrabold tracking-tight text-ink-900 md:text-5xl">
-          Hablemos de tu proyecto
-        </h1>
-        <p class="mt-4 text-lg text-ink-700">
-          Cuéntame en qué estás y qué te gustaría lograr. Te respondo personalmente
-          con una primera orientación, sin compromiso.
-        </p>
-
-        <ul class="mt-8 space-y-4">
-          {
-            SITE.email && (
-              <li class="flex items-center gap-3">
-                <span class="grid h-10 w-10 place-items-center rounded-lg bg-accent-50 text-accent-700">
-                  <Icon name="pencil" class="h-5 w-5" />
-                </span>
-                <a href={`mailto:${SITE.email}`} class="text-ink-800 hover:text-accent-700">
-                  {SITE.email}
-                </a>
-              </li>
-            )
-          }
-          {
-            whatsappUrl && (
-              <li class="flex items-center gap-3">
-                <span class="grid h-10 w-10 place-items-center rounded-lg bg-accent-50 text-accent-700">
-                  <Icon name="bolt" class="h-5 w-5" />
-                </span>
-                <a href={whatsappUrl} target="_blank" rel="noopener" class="text-ink-800 hover:text-accent-700">
-                  Escríbeme por WhatsApp
-                </a>
-              </li>
-            )
-          }
-        </ul>
-      </div>
-
-      <div class="rounded-2xl border border-line bg-surface p-7 shadow-sm">
-        {
-          WEB3FORMS_KEY ? (
-            <form action="https://api.web3forms.com/submit" method="POST" class="space-y-5">
-              <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-              <input type="hidden" name="subject" value={`Nuevo mensaje desde ${SITE.marca}`} />
-              <input type="hidden" name="redirect" value={canonical('/gracias')} />
-              {/* Honeypot anti-spam */}
-              <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
-
-              <div>
-                <label for="nombre" class="block text-sm font-medium text-ink-800">Nombre</label>
-                <input
-                  id="nombre"
-                  name="nombre"
-                  type="text"
-                  required
-                  class="mt-1.5 w-full rounded-lg border border-line bg-surface px-4 py-2.5 text-ink-900 focus:border-accent-500"
-                />
-              </div>
-              <div>
-                <label for="email" class="block text-sm font-medium text-ink-800">Correo</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  class="mt-1.5 w-full rounded-lg border border-line bg-surface px-4 py-2.5 text-ink-900 focus:border-accent-500"
-                />
-              </div>
-              <div>
-                <label for="mensaje" class="block text-sm font-medium text-ink-800">¿En qué te ayudo?</label>
-                <textarea
-                  id="mensaje"
-                  name="mensaje"
-                  rows="5"
-                  required
-                  class="mt-1.5 w-full rounded-lg border border-line bg-surface px-4 py-2.5 text-ink-900 focus:border-accent-500"
-                />
-              </div>
-              <button
-                type="submit"
-                class="w-full rounded-lg bg-accent-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-700"
-              >
-                Enviar mensaje
-              </button>
-              <p class="text-center text-xs text-muted">Te respondo en menos de 48 horas hábiles.</p>
-            </form>
-          ) : (
-            <div class="rounded-lg bg-surface-alt p-5 text-sm text-ink-700">
-              <p class="font-semibold text-ink-900">Formulario pendiente de configurar.</p>
-              <p class="mt-2">
-                Crea una clave gratis en <a href="https://web3forms.com" class="text-accent-700 underline">web3forms.com</a>{' '}
-                y añádela como variable <code>PUBLIC_WEB3FORMS_KEY</code> en tu archivo
-                <code>.env</code> y en Vercel. Mientras tanto puedes escribir directamente
-                {SITE.email ? <> a <a href={`mailto:${SITE.email}`} class="text-accent-700 underline">{SITE.email}</a></> : ' por tus redes'}.
-              </p>
-            </div>
-          )
-        }
-      </div>
+    <div class="max-w-2xl">
+      <p class="eyebrow">Hablemos</p>
+      <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-ink-900 md:text-5xl">Contacto</h1>
+      <p class="mt-4 text-lg text-ink-700">
+        Estoy abierto a nuevos retos profesionales y colaboraciones en marketing digital,
+        performance e inteligencia artificial aplicada al marketing. Escríbeme por el canal
+        que prefieras.
+      </p>
     </div>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-3">
+      {
+        canales.map((c) => (
+          <a
+            href={c.href}
+            target={c.icon === 'mail' ? undefined : '_blank'}
+            rel={c.icon === 'mail' ? undefined : 'me noopener'}
+            class="group flex flex-col rounded-2xl border border-line bg-surface-pure p-6 transition-all hover:-translate-y-1 hover:border-accent-500/50 hover:shadow-lg"
+          >
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-accent-50 text-accent-700">
+              <Icon name={c.icon} class="h-5 w-5" />
+            </span>
+            <h2 class="mt-4 font-display font-semibold text-ink-900">{c.label}</h2>
+            <p class="mt-1 flex-1 text-sm text-muted">{c.desc}</p>
+            <span class="mt-3 break-all font-mono text-xs text-accent-700">{c.valor}</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="mt-10 font-mono text-sm text-muted">📍 Lima, Perú · Disponible para trabajo remoto e híbrido</p>
   </section>
 </BaseLayout>

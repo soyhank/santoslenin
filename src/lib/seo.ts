@@ -1,84 +1,72 @@
 /**
- * Helpers de SEO: construcción de URLs canónicas y JSON-LD reutilizable.
+ * Helpers de SEO: URLs canónicas y JSON-LD reutilizable.
  */
 import { SITE } from '../config/site';
 
-/** Convierte una ruta relativa en URL absoluta canónica. */
+/** Convierte una ruta relativa en URL absoluta canónica (sin barra final, salvo raíz). */
 export function canonical(path: string): string {
   const clean = path.startsWith('/') ? path : `/${path}`;
-  return new URL(clean, SITE.url).href.replace(/\/$/, '') || SITE.url;
+  if (clean === '/') return SITE.url;
+  return new URL(clean, SITE.url).href.replace(/\/$/, '');
 }
 
-/** Lista de URLs de redes (sameAs) no vacías, para los schemas. */
-export function sameAs(): string[] {
-  return Object.values(SITE.redes as Record<string, string>).filter((u) => Boolean(u));
-}
+const PERSON_ID = `${SITE.url}/#person`;
 
-/** JSON-LD Person — identidad principal de la marca. */
+/** JSON-LD Person — identidad/entidad principal. Va en el layout base. */
 export function personSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    '@id': `${SITE.url}/#person`,
+    '@id': PERSON_ID,
     name: SITE.nombre,
-    jobTitle: SITE.rol,
-    description: SITE.descripcion,
+    alternateName: SITE.nombreCorto,
+    jobTitle: 'Especialista en Marketing Digital y Performance Marketing',
+    description:
+      'Especialista en marketing digital y docente universitario. Lidera proyectos de performance marketing, embudos de conversión e inteligencia artificial aplicada al marketing.',
     url: SITE.url,
-    ...(SITE.email ? { email: `mailto:${SITE.email}` } : {}),
-    ...(SITE.telefono ? { telephone: SITE.telefono } : {}),
+    image: new URL(SITE.fotoPersona, SITE.url).href,
+    email: `mailto:${SITE.email}`,
     address: {
       '@type': 'PostalAddress',
       addressLocality: SITE.ciudad,
-      addressRegion: SITE.region,
       addressCountry: SITE.pais,
     },
-    sameAs: sameAs(),
-    image: new URL(SITE.ogImage, SITE.url).href,
+    alumniOf: SITE.alumniOf.map((name) => ({
+      '@type': 'CollegeOrUniversity',
+      name,
+    })),
+    knowsAbout: [...SITE.knowsAbout],
+    knowsLanguage: ['es', 'en'],
+    sameAs: [SITE.redes.linkedin, SITE.redes.youtube],
   };
 }
 
-/** JSON-LD WebSite — habilita el cuadro de búsqueda de marca en Google. */
+/** JSON-LD WebSite — habilita búsqueda de marca. */
 export function webSiteSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': `${SITE.url}/#website`,
     url: SITE.url,
-    name: SITE.marca,
+    name: SITE.nombre,
     description: SITE.descripcion,
     inLanguage: SITE.lang,
-    publisher: { '@id': `${SITE.url}/#person` },
+    publisher: { '@id': PERSON_ID },
   };
 }
 
-/** JSON-LD ProfessionalService — para SEO local de servicios. */
-export function professionalServiceSchema() {
+/** JSON-LD ProfilePage — para /sobre-mi/. */
+export function profilePageSchema(path: string) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
-    '@id': `${SITE.url}/#service`,
-    name: `${SITE.nombre} — ${SITE.rol}`,
-    description: SITE.descripcion,
-    url: SITE.url,
-    image: new URL(SITE.ogImage, SITE.url).href,
-    ...(SITE.telefono ? { telephone: SITE.telefono } : {}),
-    ...(SITE.email ? { email: SITE.email } : {}),
-    areaServed: {
-      '@type': 'Country',
-      name: SITE.paisNombre,
-    },
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: SITE.ciudad,
-      addressRegion: SITE.region,
-      addressCountry: SITE.pais,
-    },
-    provider: { '@id': `${SITE.url}/#person` },
-    sameAs: sameAs(),
+    '@type': 'ProfilePage',
+    url: canonical(path),
+    inLanguage: SITE.lang,
+    mainEntity: { '@id': PERSON_ID },
   };
 }
 
-/** JSON-LD BreadcrumbList a partir de pares [nombre, ruta]. */
+/** JSON-LD BreadcrumbList a partir de pares nombre/ruta. */
 export function breadcrumbSchema(items: { name: string; path: string }[]) {
   return {
     '@context': 'https://schema.org',
@@ -92,27 +80,43 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
   };
 }
 
-/** JSON-LD Article para entradas del blog. */
+/** JSON-LD Article (author → Person) para posts, pilares y proyectos. */
 export function articleSchema(opts: {
-  titulo: string;
-  descripcion: string;
+  title: string;
+  description: string;
   path: string;
-  publicado: Date;
-  actualizado?: Date;
-  imagen?: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  image?: string;
 }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
-    headline: opts.titulo,
-    description: opts.descripcion,
+    headline: opts.title,
+    description: opts.description,
     inLanguage: SITE.lang,
     url: canonical(opts.path),
     mainEntityOfPage: canonical(opts.path),
-    datePublished: opts.publicado.toISOString(),
-    dateModified: (opts.actualizado ?? opts.publicado).toISOString(),
-    image: new URL(opts.imagen ?? SITE.ogImage, SITE.url).href,
-    author: { '@id': `${SITE.url}/#person` },
-    publisher: { '@id': `${SITE.url}/#person` },
+    datePublished: opts.pubDate.toISOString(),
+    dateModified: (opts.updatedDate ?? opts.pubDate).toISOString(),
+    image: new URL(opts.image ?? SITE.ogImage, SITE.url).href,
+    author: { '@id': PERSON_ID },
+    publisher: { '@id': PERSON_ID },
+  };
+}
+
+/** JSON-LD FAQPage a partir de pares pregunta/respuesta. */
+export function faqSchema(faq: { pregunta: string; respuesta: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({
+      '@type': 'Question',
+      name: f.pregunta,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.respuesta,
+      },
+    })),
   };
 }

@@ -1,54 +1,63 @@
 /**
- * Fuente única de verdad de los datos de marca y SEO global.
- * Edita aquí: estos valores alimentan metadatos, JSON-LD, header, footer y sitemap.
- * Los campos marcados con [COMPLETAR] / [CONFIRMAR] deben revisarse antes de publicar.
+ * Fuente única de verdad de la identidad de Santos Lenin Vilcachagua Ayala.
+ * Alimenta metadatos, JSON-LD, header, footer y sitemap.
  */
 
 export const SITE = {
-  /** Dominio canónico (sin barra final). Cambiar al dominio propio cuando exista. */
-  url: 'https://santoslenin.vercel.app',
+  url: 'https://santoslenin.com',
 
-  /** Nombre de la persona/marca. */
-  nombre: 'Lenin Santos', // [CONFIRMAR] nombre exacto que quieres posicionar
-  marca: 'Lenin Santos',
+  /** Nombre completo — uso obligatorio en title del Home, hero, sobre-mí, schema, og:title, footer. */
+  nombre: 'Santos Lenin Vilcachagua Ayala',
+  /** Forma corta para títulos internos y alternateName del schema. */
+  nombreCorto: 'Santos Lenin Vilcachagua',
+  /** Forma de navegación. */
+  nav: 'Santos Lenin',
 
-  /** Titular profesional corto (aparece en <title> de la home y en JSON-LD jobTitle). */
-  rol: 'Consultor de Marketing Digital y SEO', // [CONFIRMAR] tu especialidad real
+  rol: 'Especialista en Marketing Digital y Performance Marketing',
+  /** Tesis / propuesta del hero. */
+  tesis:
+    'Especialista en Marketing Digital y docente universitario. Performance marketing y embudos de conversión potenciados con IA.',
 
-  /** Tagline / propuesta de valor en una frase. */
-  tagline: 'Ayudo a negocios a crecer con estrategia digital, SEO y resultados medibles.',
-
-  /** Descripción por defecto (meta description fallback, 150-160 caracteres). */
+  /** Descripción por defecto (meta description fallback). */
   descripcion:
-    'Consultor de marketing digital y SEO. Acompaño a empresas y profesionales a atraer clientes con estrategias claras, contenido y posicionamiento orgánico.',
+    'Especialista en marketing digital y docente universitario. Lidera proyectos de performance marketing, embudos de conversión e inteligencia artificial aplicada al marketing.',
 
-  /** Idioma del sitio. */
   lang: 'es',
   locale: 'es_PE',
-
-  /** Ubicación (mejora el SEO local y el schema). */
   ciudad: 'Lima',
-  region: 'Lima',
   pais: 'PE',
   paisNombre: 'Perú',
 
-  /** Contacto. Deja vacío ('') lo que no quieras mostrar; se oculta solo. */
-  email: '', // [COMPLETAR] ej. hola@santoslenin.com
-  telefono: '', // [COMPLETAR] E.164, ej. +51999888777
-  telefonoDisplay: '', // ej. 999 888 777
-  whatsapp: '', // [COMPLETAR] solo dígitos, ej. 51999888777
+  email: 'soypuromarketing@gmail.com',
 
-  /** Redes sociales. Vacío = no se muestra el icono. */
+  /** Imagen de la persona (entidad) y OG por defecto. */
+  fotoPersona: '/santos-lenin-vilcachagua.jpg',
+  ogImage: '/og-default.png',
+
   redes: {
-    linkedin: '', // [COMPLETAR] https://www.linkedin.com/in/...
-    instagram: '',
-    x: '',
-    youtube: '',
-    github: 'https://github.com/soyhank',
+    linkedin: 'https://www.linkedin.com/in/santos-lenin-vilcachagua-ayala',
+    youtube: 'https://www.youtube.com/channel/UC4jrmeBBdDjpOmkT8VJi9pw',
   },
 
-  /** Imagen Open Graph por defecto (1200x630) en /public. */
-  ogImage: '/og-default.png',
+  /** Formación para schema Person.alumniOf. */
+  alumniOf: [
+    'Universidad Privada del Norte',
+    'Universidad Nacional del Callao',
+  ],
+
+  /** Áreas de conocimiento para schema Person.knowsAbout. */
+  knowsAbout: [
+    'Marketing Digital',
+    'Performance Marketing',
+    'Inteligencia Artificial aplicada al Marketing',
+    'GEO',
+    'AEO',
+    'SEO',
+    'Meta Ads',
+    'Google Ads',
+    'HubSpot',
+    'Marketing Analytics',
+  ],
 } as const;
 
 export type Site = typeof SITE;
@@ -56,8 +65,8 @@ export type Site = typeof SITE;
 /** Navegación principal (header y footer). */
 export const NAV = [
   { label: 'Inicio', href: '/' },
-  { label: 'Servicios', href: '/servicios' },
   { label: 'Sobre mí', href: '/sobre-mi' },
+  { label: 'Portafolio', href: '/portafolio' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contacto', href: '/contacto' },
 ] as const;
