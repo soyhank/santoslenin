@@ -1,0 +1,243 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RelatedContent from '../components/RelatedContent.astro';
+import { SITE } from '../config/site';
+import { articleSchema, faqSchema, breadcrumbSchema } from '../lib/seo';
+
+const path = '/ia-en-marketing';
+const title = 'Inteligencia artificial aplicada al marketing: guía completa con casos reales [2026]';
+const description =
+  'Guía completa de inteligencia artificial aplicada al marketing: qué es, para qué sirve, herramientas, cómo implementarla en tu equipo y casos reales [2026].';
+const pubDate = new Date('2026-02-05');
+const updatedDate = new Date('2026-02-05');
+
+const faq = [
+  {
+    pregunta: '¿La inteligencia artificial va a reemplazar a los marketeros?',
+    respuesta:
+      'No. La IA reemplaza tareas, no criterio. Automatiza lo repetitivo (investigación, primeros borradores, reportes) y libera tiempo para la estrategia, la creatividad y la relación con el negocio, que siguen siendo humanas.',
+  },
+  {
+    pregunta: '¿Qué herramienta de IA debería aprender primero un marketero?',
+    respuesta:
+      'Un asistente conversacional sólido (un LLM como Claude o ChatGPT) usado con buenos prompts. Con eso cubres investigación, contenido y análisis. Después conviene sumar automatización (Zapier) y analítica de datos (SQL, Looker Studio).',
+  },
+  {
+    pregunta: '¿La IA sirve para campañas de performance marketing?',
+    respuesta:
+      'Sí. Ayuda a generar variantes de copy y creativos, agrupar audiencias, analizar resultados y detectar patrones de optimización más rápido. La decisión final sobre presupuesto y escalado sigue siendo del especialista.',
+  },
+  {
+    pregunta: '¿Necesito saber programar para usar IA en marketing?',
+    respuesta:
+      'No para empezar. Con prompts y herramientas no-code haces mucho. Saber algo de Python y SQL amplía el techo: te permite procesar datos propios y construir automatizaciones más potentes.',
+  },
+  {
+    pregunta: '¿Cómo empiezo a implementar IA en mi equipo de marketing?',
+    respuesta:
+      'Identifica una tarea repetitiva y de alto volumen (por ejemplo, reportes semanales), automatízala como piloto, mide el tiempo ahorrado y documenta el flujo. Con ese caso de éxito escalas a otros procesos.',
+  },
+  {
+    pregunta: '¿Qué riesgos tiene usar IA en marketing?',
+    respuesta:
+      'Datos sensibles en herramientas externas, contenido genérico si no se edita, y "alucinaciones" (datos inventados). Se mitigan con políticas de datos, revisión humana y verificación de toda cifra o cita antes de publicar.',
+  },
+];
+
+const schemas: Record<string, unknown>[] = [
+  articleSchema({ title, description, path, pubDate, updatedDate }),
+  breadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'IA en marketing', path },
+  ]),
+  faqSchema(faq),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  type="article"
+  schemas={schemas}
+  publishedTime={pubDate.toISOString()}
+  modifiedTime={updatedDate.toISOString()}
+>
+  <article class="mx-auto max-w-3xl px-5 py-16">
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/blog" class="hover:text-accent-700">Blog</a> /
+      <span class="text-ink-800">IA en marketing</span>
+    </nav>
+
+    <p class="eyebrow">Guía pilar · IA en marketing</p>
+    <h1 class="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-ink-900">
+      Inteligencia artificial aplicada al marketing: guía completa con casos reales
+    </h1>
+
+    <div class="mt-6 flex flex-wrap items-center gap-3 border-y border-line py-4 font-mono text-xs text-muted">
+      <span class="font-medium text-ink-800">{SITE.nombre}</span>
+      <span aria-hidden="true">·</span>
+      <span>Actualizado 2026</span>
+      <span aria-hidden="true">·</span>
+      <span>Lectura ~12 min</span>
+    </div>
+
+    <div class="prose mt-8">
+      <p>
+        La inteligencia artificial aplicada al marketing es el uso de modelos de IA —en especial
+        los modelos de lenguaje (LLMs)— para <strong>investigar mercados, crear y optimizar
+        contenido, automatizar tareas y analizar datos</strong>. No reemplaza al marketero:
+        amplifica su criterio, acelera la investigación, reduce el trabajo repetitivo y permite
+        decidir con más y mejores datos.
+      </p>
+
+      <p>
+        En esta guía explico, desde mi experiencia liderando proyectos de performance marketing
+        en sectores B2B, financiero y educativo, cómo se usa la IA hoy en marketing, qué
+        herramientas conviene dominar y cómo implementarla en un equipo sin caer en la moda vacía.
+      </p>
+
+      <h2>¿Qué es la inteligencia artificial aplicada al marketing?</h2>
+      <p>
+        Es la disciplina que integra modelos de IA en los procesos de marketing para producir
+        resultados de negocio. No se trata de "usar ChatGPT de vez en cuando", sino de incorporar
+        la IA de forma sistemática en cuatro grandes áreas:
+      </p>
+
+      <table>
+        <thead>
+          <tr><th>Área</th><th>Qué hace la IA</th><th>Ejemplo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Investigación</td><td>Sintetiza mercados, competidores y audiencias</td><td>Resumir reseñas y foros para detectar dolores reales</td></tr>
+          <tr><td>Contenido</td><td>Genera y optimiza textos, ideas y variantes</td><td>Borradores de copy y guiones a partir de un brief</td></tr>
+          <tr><td>Automatización</td><td>Encadena tareas repetitivas entre herramientas</td><td>Clasificar leads o armar reportes sin intervención manual</td></tr>
+          <tr><td>Analítica</td><td>Procesa datos y explica patrones</td><td>Detectar qué creatividades y audiencias rinden mejor</td></tr>
+        </tbody>
+      </table>
+
+      <h2>¿Para qué sirve la IA en marketing hoy?</h2>
+      <p>Los usos con retorno más claro y comprobable en 2026 son:</p>
+      <ul>
+        <li><strong>Investigación de mercado y de cliente</strong> en horas, no semanas.</li>
+        <li><strong>Producción de contenido</strong> a escala manteniendo una línea editorial.</li>
+        <li><strong>Optimización de campañas</strong>: variantes de copy, ángulos creativos y agrupación de audiencias.</li>
+        <li><strong>Automatización de reportes</strong> y tareas operativas recurrentes.</li>
+        <li><strong>Análisis de datos propios</strong> (CRM, ventas, web) con lenguaje natural.</li>
+        <li><strong>Atención y nutrición</strong> con asistentes y respuestas personalizadas.</li>
+      </ul>
+      <p>
+        La regla práctica: la IA rinde más donde hay <strong>volumen y repetición</strong>. Cuanto
+        más mecánica y frecuente es la tarea, mayor el ahorro.
+      </p>
+
+      <h2>¿Cómo usar la IA en la investigación de mercados?</h2>
+      <p>
+        La investigación es, para mí, el caso de uso de mayor impacto. La IA permite procesar
+        grandes volúmenes de texto —reseñas, foros, encuestas, transcripciones— y devolver
+        patrones accionables: objeciones de compra, lenguaje del cliente, vacíos de la competencia.
+      </p>
+      <p>
+        El flujo que recomiendo: define la pregunta de negocio, reúne fuentes reales (no inventadas),
+        pide a la IA que sintetice por temas y, sobre todo, <strong>verifica</strong> cada dato antes
+        de usarlo. Lo desarrollo paso a paso en mi artículo sobre
+        <a href="/blog/como-usar-ia-investigacion-mercados">cómo usar IA en la investigación de mercados</a>.
+      </p>
+
+      <h2>¿Cómo automatizar tareas y reportes de marketing con IA?</h2>
+      <p>
+        La segunda gran palanca es la automatización. Reportes semanales, clasificación de leads,
+        respuestas frecuentes o consolidación de datos entre plataformas son tareas que consumen
+        horas y aportan poco valor estratégico. Automatizarlas libera al equipo para pensar.
+      </p>
+      <p>
+        Con herramientas como Zapier, scripts en Python y consultas SQL, conectadas a un tablero en
+        Looker Studio, un reporte que tomaba medio día puede generarse solo. Lo explico en detalle en
+        <a href="/blog/automatizar-reportes-marketing-looker-ia">cómo automatizar reportes de marketing con Looker Studio e IA</a>.
+      </p>
+
+      <h2>¿Qué herramientas de IA conviene dominar?</h2>
+      <p>No necesitas decenas de apps. Necesitas un stack pequeño y bien aprovechado:</p>
+      <table>
+        <thead>
+          <tr><th>Herramienta</th><th>Para qué</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>LLM conversacional (Claude, ChatGPT)</td><td>Investigación, contenido, análisis con prompts</td></tr>
+          <tr><td>Claude Code</td><td>Automatizaciones, procesamiento de datos y prototipos</td></tr>
+          <tr><td>Python + SQL</td><td>Trabajar con datos propios y construir flujos a medida</td></tr>
+          <tr><td>Zapier</td><td>Conectar herramientas sin programar</td></tr>
+          <tr><td>Looker Studio / Power BI</td><td>Visualizar y reportar resultados</td></tr>
+        </tbody>
+      </table>
+      <p>
+        La herramienta importa menos que el criterio para usarla. Un buen prompt y una pregunta de
+        negocio clara valen más que la última app de moda.
+      </p>
+
+      <h2>¿Cómo implementar IA en un equipo de marketing?</h2>
+      <p>Un plan de adopción realista, en cinco pasos:</p>
+      <ol>
+        <li><strong>Elige una tarea piloto</strong> repetitiva y medible (por ejemplo, el reporte semanal).</li>
+        <li><strong>Automatiza o asiste</strong> esa tarea con IA y documenta el flujo.</li>
+        <li><strong>Mide el ahorro</strong> de tiempo y la mejora de calidad frente al proceso anterior.</li>
+        <li><strong>Capacita al equipo</strong> con ese caso de éxito como ejemplo concreto.</li>
+        <li><strong>Escala</strong> a nuevos procesos y define políticas de datos y revisión humana.</li>
+      </ol>
+      <p>
+        Empezar pequeño y medible es la diferencia entre una adopción que prende y un piloto que se
+        abandona. El objetivo no es "usar IA", es ganar tiempo y calidad de forma demostrable.
+      </p>
+
+      <h2>Casos reales: cómo apliqué IA y automatización en mis proyectos</h2>
+      <p>
+        En los proyectos de performance que lideré, el mayor valor de la IA y la automatización
+        estuvo en dos frentes: <strong>acelerar la investigación</strong> del público y del mensaje,
+        y <strong>profesionalizar el reporte</strong> para decidir más rápido.
+      </p>
+      <p>
+        En el proyecto B2B para <a href="/portafolio/semcocad-b2b-autodesk">SemcoCAD</a> (Gold Partner
+        de Autodesk), la disciplina de medición y los dashboards fueron clave para optimizar el costo
+        por lead y la calidad de las oportunidades: tener los datos del embudo consolidados permitió
+        decidir qué pausar y qué escalar sin esperar al cierre del mes. Esa misma lógica de
+        "medir para decidir" es la que la IA potencia hoy, automatizando la parte tediosa del análisis.
+      </p>
+      <!-- [TODO_SANTOS: completar anécdota concreta de un flujo de IA/automatización específico que hayas implementado, con la herramienta y el resultado exacto] -->
+      <p>
+        En captación financiera e inmobiliaria con <a href="/portafolio/activa-capital-embudos-meta">Activa Capital</a>,
+        la velocidad para analizar resultados de campañas y reaccionar marcó la diferencia en el costo
+        por lead. Cuanto antes ves el patrón, antes corriges: ahí la IA aplicada al análisis de datos
+        es una ventaja directa.
+      </p>
+
+      <h2>Errores comunes al adoptar IA en marketing</h2>
+      <ul>
+        <li><strong>Usarla sin pregunta de negocio</strong>: producir contenido por producir, sin objetivo.</li>
+        <li><strong>No editar</strong>: publicar el primer borrador y sonar genérico.</li>
+        <li><strong>No verificar</strong>: dar por buenas cifras o citas que la IA inventó.</li>
+        <li><strong>Ignorar la privacidad</strong>: subir datos sensibles a herramientas sin política clara.</li>
+        <li><strong>Esperar magia</strong>: creer que la IA reemplaza la estrategia en lugar de servirla.</li>
+      </ul>
+      <p>
+        La IA es una palanca extraordinaria cuando se usa con criterio. El marketero que la domina no
+        es el que la usa más, sino el que sabe <strong>qué preguntarle y qué verificar</strong>.
+      </p>
+    </div>
+
+    <section class="mt-14">
+      <h2 class="font-display text-2xl font-bold text-ink-900">Preguntas frecuentes</h2>
+      <dl class="mt-6 divide-y divide-line border-y border-line">
+        {
+          faq.map((f) => (
+            <div class="py-5">
+              <dt class="font-display font-semibold text-ink-900">{f.pregunta}</dt>
+              <dd class="mt-2 text-ink-700">{f.respuesta}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <RelatedContent cluster="ia-marketing" />
+  </article>
+</BaseLayout>

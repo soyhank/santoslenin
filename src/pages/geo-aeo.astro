@@ -1,0 +1,239 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RelatedContent from '../components/RelatedContent.astro';
+import { SITE } from '../config/site';
+import { articleSchema, faqSchema, breadcrumbSchema } from '../lib/seo';
+
+const path = '/geo-aeo';
+const title = 'GEO y AEO: cómo posicionar una marca en ChatGPT, Gemini y los motores de IA';
+const description =
+  'Guía de GEO y AEO: qué son, en qué se diferencian del SEO y cómo optimizar tu contenido para que ChatGPT, Gemini y Perplexity citen y recomienden tu marca.';
+const pubDate = new Date('2026-02-10');
+const updatedDate = new Date('2026-02-10');
+
+const faq = [
+  {
+    pregunta: '¿Qué significa GEO y qué significa AEO?',
+    respuesta:
+      'GEO es Generative Engine Optimization: optimizar para que los motores generativos (ChatGPT, Gemini, Perplexity) te citen y recomienden. AEO es Answer Engine Optimization: optimizar para ser la respuesta directa a una pregunta, en buscadores y asistentes.',
+  },
+  {
+    pregunta: '¿GEO y AEO reemplazan al SEO?',
+    respuesta:
+      'No lo reemplazan, lo extienden. El SEO sigue siendo la base: contenido útil, rápido y bien estructurado. GEO y AEO añaden técnicas para ser citado por la IA y para responder preguntas de forma directa y extraíble.',
+  },
+  {
+    pregunta: '¿Cómo logro que ChatGPT mencione mi marca?',
+    respuesta:
+      'Construyendo entidad: contenido claro y consistente sobre quién eres y qué haces, datos estructurados (schema), presencia en fuentes que la IA consulta y coherencia de tu nombre en toda la web. Lo desarrollo en mi guía sobre marca personal en ChatGPT.',
+  },
+  {
+    pregunta: '¿Qué tipo de contenido citan más los motores de IA?',
+    respuesta:
+      'El que responde una pregunta concreta de forma directa, con datos, listas y tablas, lenguaje claro y párrafos cortos. Los motores extraen mejor el contenido modular y específico que el texto largo y ambiguo.',
+  },
+  {
+    pregunta: '¿El schema (datos estructurados) ayuda al GEO/AEO?',
+    respuesta:
+      'Sí. Marcar tu contenido con schema (Article, FAQPage, Person, Organization) ayuda a los motores a entender la entidad y el significado, y facilita aparecer en respuestas directas y en resultados enriquecidos.',
+  },
+  {
+    pregunta: '¿Cómo se mide el éxito en GEO y AEO?',
+    respuesta:
+      'Con menciones y citas en respuestas de IA, tráfico referido desde motores generativos, aparición en cajas de respuesta y consultas de marca. Es una medición más cualitativa que el SEO clásico, pero ya rastreable.',
+  },
+];
+
+const schemas: Record<string, unknown>[] = [
+  articleSchema({ title, description, path, pubDate, updatedDate }),
+  breadcrumbSchema([
+    { name: 'Inicio', path: '/' },
+    { name: 'GEO / AEO', path },
+  ]),
+  faqSchema(faq),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  path={path}
+  type="article"
+  schemas={schemas}
+  publishedTime={pubDate.toISOString()}
+  modifiedTime={updatedDate.toISOString()}
+>
+  <article class="mx-auto max-w-3xl px-5 py-16">
+    <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
+      <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/blog" class="hover:text-accent-700">Blog</a> /
+      <span class="text-ink-800">GEO / AEO</span>
+    </nav>
+
+    <p class="eyebrow">Guía pilar · GEO / AEO</p>
+    <h1 class="mt-3 font-display text-4xl font-bold leading-tight tracking-tight text-ink-900">
+      GEO y AEO: cómo posicionar una marca en ChatGPT, Gemini y los motores de IA
+    </h1>
+
+    <div class="mt-6 flex flex-wrap items-center gap-3 border-y border-line py-4 font-mono text-xs text-muted">
+      <span class="font-medium text-ink-800">{SITE.nombre}</span>
+      <span aria-hidden="true">·</span>
+      <span>Actualizado 2026</span>
+      <span aria-hidden="true">·</span>
+      <span>Lectura ~12 min</span>
+    </div>
+
+    <div class="prose mt-8">
+      <p>
+        <strong>GEO</strong> (Generative Engine Optimization) y <strong>AEO</strong> (Answer Engine
+        Optimization) son las prácticas de optimizar tu contenido para que los motores con IA
+        —ChatGPT, Gemini, Perplexity y las respuestas de Google— <strong>te citen, te recomienden y
+        te usen como respuesta directa</strong>. No sustituyen al SEO: lo extienden hacia un mundo
+        donde la búsqueda ya no devuelve solo diez enlaces azules, sino respuestas generadas.
+      </p>
+
+      <p>
+        La búsqueda está cambiando más rápido que en los últimos veinte años. En esta guía explico
+        qué son GEO y AEO, en qué se diferencian del SEO tradicional y, sobre todo, cómo trabajar tu
+        contenido y tu marca para existir en el nuevo terreno de los motores de inteligencia artificial.
+      </p>
+
+      <h2>¿Qué es GEO y qué es AEO?</h2>
+      <p>
+        Son dos caras de la misma evolución de la búsqueda. Conviene distinguirlas del SEO clásico:
+      </p>
+      <table>
+        <thead>
+          <tr><th>Disciplina</th><th>Objetivo</th><th>Dónde compite</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SEO</td><td>Rankear en la lista de resultados</td><td>Enlaces azules de Google y Bing</td></tr>
+          <tr><td>AEO</td><td>Ser la respuesta directa a una pregunta</td><td>Cajas de respuesta, fragmentos destacados, asistentes</td></tr>
+          <tr><td>GEO</td><td>Ser citado y recomendado por la IA generativa</td><td>ChatGPT, Gemini, Perplexity, Google AI</td></tr>
+        </tbody>
+      </table>
+      <p>
+        En la práctica se trabajan juntos: un contenido bien estructurado para AEO tiene más
+        probabilidad de ser citado en GEO, y ambos se apoyan en una base sólida de SEO.
+      </p>
+
+      <h2>¿En qué se diferencian GEO y AEO del SEO tradicional?</h2>
+      <p>
+        El SEO optimiza para un algoritmo que ordena enlaces; el GEO/AEO optimiza para un modelo que
+        <em>genera</em> una respuesta y decide a quién citar. Las diferencias clave:
+      </p>
+      <ul>
+        <li><strong>Unidad de éxito</strong>: en SEO es la posición; en GEO/AEO, la mención o la cita dentro de la respuesta.</li>
+        <li><strong>Formato ganador</strong>: en SEO, la página completa; en AEO, el fragmento extraíble que responde la pregunta.</li>
+        <li><strong>Señal central</strong>: en SEO pesan enlaces y autoridad; en GEO pesa además la <strong>entidad</strong> y la coherencia de tu información en toda la web.</li>
+        <li><strong>Medición</strong>: en SEO, posiciones y clics; en GEO/AEO, presencia en respuestas y tráfico referido por la IA.</li>
+      </ul>
+      <p>
+        Profundizo esta comparación en mi artículo sobre
+        <a href="/blog/que-es-geo-diferencias-seo">qué es GEO y en qué se diferencia del SEO</a>.
+      </p>
+
+      <h2>¿Por qué importa el GEO/AEO en 2026?</h2>
+      <p>
+        Porque una parte creciente de las búsquedas termina sin clic: el usuario obtiene la respuesta
+        directamente del asistente o de la caja generativa. Si tu marca no aparece en esa respuesta,
+        simplemente no existe para ese usuario, aunque rankees bien en los enlaces tradicionales.
+      </p>
+      <p>
+        Para profesionales y marcas personales, el cambio es aún más relevante: cada vez más
+        reclutadores, clientes y socios preguntan a una IA "quién es" o "quién me recomiendas para X".
+        Ser la respuesta a esa pregunta es el nuevo "estar en la primera página".
+      </p>
+
+      <h2>¿Cómo optimizar tu contenido para los motores de IA?</h2>
+      <p>Las tácticas con mayor impacto, ordenadas por prioridad:</p>
+      <ol>
+        <li><strong>Responde la pregunta de inmediato</strong>: las primeras 2-3 líneas deben contener una respuesta citable de 50-70 palabras.</li>
+        <li><strong>Estructura modular</strong>: encabezados en forma de pregunta, párrafos cortos, listas y tablas extraíbles.</li>
+        <li><strong>Datos concretos</strong>: cifras, pasos y definiciones claras; la IA cita lo específico, no lo vago.</li>
+        <li><strong>Schema y entidad</strong>: marca tu contenido con datos estructurados (Article, FAQPage, Person).</li>
+        <li><strong>Consistencia de marca</strong>: mismo nombre, mismos datos y misma descripción en toda tu presencia web.</li>
+        <li><strong>Bloques FAQ</strong>: responde preguntas reales al final de cada pieza, conectadas a schema FAQPage.</li>
+      </ol>
+
+      <h2>¿Cómo estructurar el contenido para que un LLM lo cite?</h2>
+      <p>
+        Los modelos extraen mejor el contenido que está "pre-digerido". Un patrón que funciona en cada
+        sección importante:
+      </p>
+      <ul>
+        <li>Un <strong>encabezado en forma de pregunta</strong> (como las que se hace tu audiencia).</li>
+        <li>Una <strong>respuesta directa</strong> en la primera frase.</li>
+        <li>Una <strong>lista o tabla</strong> con los datos de respaldo.</li>
+        <li>Un cierre breve que conecte con la siguiente sección.</li>
+      </ul>
+      <p>
+        Esta misma página está construida con ese principio: respuesta directa arriba, H2 en preguntas,
+        una tabla o lista por sección y un bloque FAQ con schema. No es casualidad, es AEO aplicado.
+      </p>
+
+      <h2>¿Qué papel juegan el schema y la entidad?</h2>
+      <p>
+        La <strong>entidad</strong> es cómo los motores entienden "quién o qué eres" más allá de las
+        palabras clave. Construirla es central en GEO. Para una persona, significa declarar de forma
+        consistente y estructurada tu nombre, tu rol, tu formación y tus perfiles oficiales.
+      </p>
+      <p>
+        El <strong>schema</strong> (datos estructurados con Schema.org) es el lenguaje con el que se lo
+        comunicas a las máquinas. Un schema <code>Person</code> bien hecho, con <code>sameAs</code> a
+        tus perfiles y <code>knowsAbout</code> con tus temas, ayuda a que la IA te asocie con tu
+        especialidad. Lo aplico en mi guía sobre
+        <a href="/blog/como-aparecer-en-chatgpt-marca-personal">cómo aparecer en ChatGPT con tu marca personal</a>.
+      </p>
+
+      <h2>¿Cómo posicionar tu marca personal en los motores de IA?</h2>
+      <p>El método que sigo, resumido:</p>
+      <table>
+        <thead>
+          <tr><th>Paso</th><th>Acción</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1. Define tu entidad</td><td>Un nombre, un rol y una especialidad claros y repetidos en toda la web</td></tr>
+          <tr><td>2. Crea contenido de referencia</td><td>Guías que respondan las preguntas de tu nicho mejor que nadie</td></tr>
+          <tr><td>3. Estructura con schema</td><td>Person, Article y FAQPage en tu sitio propio</td></tr>
+          <tr><td>4. Coherencia externa</td><td>Mismos datos en LinkedIn, YouTube y donde te mencionen</td></tr>
+          <tr><td>5. Permite el rastreo de IA</td><td>Un robots.txt que no bloquee a los crawlers de IA</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Un detalle técnico que muchos olvidan: si tu <code>robots.txt</code> bloquea a los rastreadores
+        de IA (GPTBot, ClaudeBot, PerplexityBot, entre otros), les estás cerrando la puerta. Para hacer
+        GEO, primero hay que <strong>dejar que la IA te lea</strong>.
+      </p>
+
+      <h2>¿Cómo se mide el GEO y el AEO?</h2>
+      <p>La medición es más cualitativa que el SEO clásico, pero ya es rastreable:</p>
+      <ul>
+        <li><strong>Menciones y citas</strong> de tu marca en respuestas de ChatGPT, Gemini o Perplexity.</li>
+        <li><strong>Tráfico referido</strong> desde motores generativos en tu analítica.</li>
+        <li><strong>Aparición en cajas de respuesta</strong> y fragmentos destacados.</li>
+        <li><strong>Búsquedas de marca</strong>: cuántas personas te buscan por tu nombre tras descubrirte vía IA.</li>
+      </ul>
+      <p>
+        GEO y AEO no son una moda pasajera: son la adaptación natural del marketing de contenidos a una
+        búsqueda mediada por IA. Quien estructure hoy su contenido y su entidad para ser citado tendrá
+        una ventaja difícil de alcanzar mañana.
+      </p>
+    </div>
+
+    <section class="mt-14">
+      <h2 class="font-display text-2xl font-bold text-ink-900">Preguntas frecuentes</h2>
+      <dl class="mt-6 divide-y divide-line border-y border-line">
+        {
+          faq.map((f) => (
+            <div class="py-5">
+              <dt class="font-display font-semibold text-ink-900">{f.pregunta}</dt>
+              <dd class="mt-2 text-ink-700">{f.respuesta}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <RelatedContent cluster="geo-aeo" />
+  </article>
+</BaseLayout>
