@@ -32,7 +32,15 @@ const cover = getPortfolioCover(proyecto.id);
 ---
 
 <BaseLayout title={d.title} description={d.description} path={path} type="article" schemas={schemas}>
-  <CoverArt seed={proyecto.id} icon={cover.icon} variant={cover.variant} class="aspect-[21/9] w-full" />
+  <CoverArt
+    seed={proyecto.id}
+    icon={cover.icon}
+    variant={cover.variant}
+    brandColor={cover.brandColor}
+    logo={cover.logo}
+    logoAlt={cover.logoAlt}
+    class="aspect-[21/9] w-full"
+  />
   <article class="mx-auto max-w-3xl px-5 py-16">
     <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
       <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/portafolio" class="hover:text-accent-700">Portafolio</a> /
