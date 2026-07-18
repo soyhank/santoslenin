@@ -63,3 +63,31 @@ const blogCovers: Record<string, { icon: CoverIcon; variant: CoverVariant }> = {
 export function getBlogCover(cluster: string) {
   return blogCovers[cluster] ?? { icon: 'spark' as CoverIcon, variant: 'light' as CoverVariant };
 }
+
+export interface ProjectEmbed {
+  kind: 'fb-video' | 'fb-post' | 'tiktok';
+  url: string;
+  caption: string;
+}
+
+/**
+ * Publicaciones públicas reales de cada cliente, insertadas con los embeds oficiales
+ * de Facebook/TikTok (iframe/SDK de la propia plataforma) — no se descarga ni rehostea
+ * ningún video o foto, solo se referencia el post original.
+ */
+const projectEmbeds: Record<string, ProjectEmbed[]> = {
+  'compass-expansion-eeuu': [
+    { kind: 'fb-video', url: 'https://www.facebook.com/reel/1183651376714845', caption: 'Reel de Compass For Business' },
+  ],
+  'activa-capital-embudos-meta': [
+    { kind: 'fb-video', url: 'https://www.facebook.com/reel/971367742589029', caption: 'Reel de Activa Capital' },
+  ],
+  'vonex-web-seo': [
+    { kind: 'fb-post', url: 'https://www.facebook.com/photo/?fbid=1523820243123306&set=pb.100064860333008.-2207520000', caption: 'Publicación de Academia Vonex' },
+    { kind: 'tiktok', url: 'https://www.tiktok.com/@tintaya_roly024/video/7257678540286528774', caption: 'Mención de Academia Vonex en TikTok' },
+  ],
+};
+
+export function getProjectEmbeds(id: string): ProjectEmbed[] {
+  return projectEmbeds[id] ?? [];
+}

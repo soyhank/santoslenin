@@ -1,0 +1,51 @@
+---
+/**
+ * Embed oficial (iframe/SDK de la propia plataforma) de una publicación pública real.
+ * No descarga ni rehostea el video/foto: solo referencia el post original, igual que
+ * un embed de YouTube. Requiere que el layout padre incluya el SDK correspondiente
+ * una sola vez por página (ver SocialEmbedScripts.astro).
+ */
+import type { ProjectEmbed } from '../lib/covers';
+
+interface Props extends ProjectEmbed {
+  class?: string;
+}
+const { kind, url, caption, class: cls = '' } = Astro.props;
+---
+
+{
+  kind === 'fb-video' && (
+    <div class:list={['overflow-hidden rounded-2xl border border-line bg-surface-pure', cls]}>
+      <div class="fb-video" data-href={url} data-width="350" data-show-text="false" />
+      <p class="border-t border-line px-4 py-2 font-mono text-xs text-muted">{caption}</p>
+    </div>
+  )
+}
+
+{
+  kind === 'fb-post' && (
+    <div class:list={['overflow-hidden rounded-2xl border border-line bg-surface-pure', cls]}>
+      <div class="fb-post" data-href={url} data-width="500" />
+      <p class="border-t border-line px-4 py-2 font-mono text-xs text-muted">{caption}</p>
+    </div>
+  )
+}
+
+{
+  kind === 'tiktok' && (
+    <div class:list={['overflow-hidden rounded-2xl border border-line bg-surface-pure', cls]}>
+      <blockquote class="tiktok-embed" cite={url} data-video-id={url.split('/video/')[1]?.split('?')[0]} style="max-width: 100%; min-width: 280px; margin: 0;">
+        <section>
+          <a target="_blank" rel="noopener" href={url}>
+            {caption}
+          </a>
+        </section>
+      </blockquote>
+      <p class="border-t border-line px-4 py-2 font-mono text-xs text-muted">{caption}</p>
+    </div>
+  )
+}
+
+<noscript>
+  <a href={url} target="_blank" rel="noopener">{caption} →</a>
+</noscript>

@@ -2,8 +2,9 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CoverArt from '../../components/CoverArt.astro';
+import SocialEmbed from '../../components/SocialEmbed.astro';
 import { articleSchema, breadcrumbSchema } from '../../lib/seo';
-import { getPortfolioCover } from '../../lib/covers';
+import { getPortfolioCover, getProjectEmbeds } from '../../lib/covers';
 
 export async function getStaticPaths() {
   const proyectos = await getCollection('portafolio');
@@ -29,6 +30,9 @@ const todos = (await getCollection('portafolio')).sort((a, b) => a.data.orden - 
 const idx = todos.findIndex((p) => p.id === proyecto.id);
 const siguiente = todos[(idx + 1) % todos.length];
 const cover = getPortfolioCover(proyecto.id);
+const embeds = getProjectEmbeds(proyecto.id);
+const needsFbSdk = embeds.some((e) => e.kind === 'fb-video' || e.kind === 'fb-post');
+const needsTiktokSdk = embeds.some((e) => e.kind === 'tiktok');
 ---
 
 <BaseLayout title={d.title} description={d.description} path={path} type="article" schemas={schemas}>
@@ -39,7 +43,7 @@ const cover = getPortfolioCover(proyecto.id);
     brandColor={cover.brandColor}
     logo={cover.logo}
     logoAlt={cover.logoAlt}
-    class="aspect-[21/9] w-full"
+    class="h-32 w-full sm:h-40 lg:h-48"
   />
   <article class="mx-auto max-w-3xl px-5 py-16">
     <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
@@ -82,6 +86,20 @@ const cover = getPortfolioCover(proyecto.id);
       <Content />
     </div>
 
+    {
+      embeds.length > 0 && (
+        <div class="mt-14">
+          <p class="eyebrow">Publicaciones reales</p>
+          <h2 class="mt-2 font-display text-xl font-semibold text-ink-900">En redes de {d.empresa}</h2>
+          <div class="mt-5 grid gap-6 sm:grid-cols-2">
+            {embeds.map((embed) => (
+              <SocialEmbed {...embed} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+
     <!-- Navegación entre proyectos -->
     <div class="mt-14 flex items-center justify-between gap-4 border-t border-line pt-6">
       <a href="/portafolio" class="text-sm font-medium text-muted hover:text-accent-700">← Todos los proyectos</a>
@@ -96,4 +114,14 @@ const cover = getPortfolioCover(proyecto.id);
       <a href="/contacto" class="mt-6 inline-block rounded-lg bg-accent-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-600">Contacto</a>
     </div>
   </article>
+
+  {
+    needsFbSdk && (
+      <>
+        <div id="fb-root" />
+        <script is:inline async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v19.0" />
+      </>
+    )
+  }
+  {needsTiktokSdk && <script is:inline async src="https://www.tiktok.com/embed.js" />}
 </BaseLayout>

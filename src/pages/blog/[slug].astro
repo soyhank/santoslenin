@@ -40,7 +40,7 @@ const cover = getBlogCover(d.cluster);
   publishedTime={d.pubDate.toISOString()}
   modifiedTime={(d.updatedDate ?? d.pubDate).toISOString()}
 >
-  <CoverArt seed={post.id} icon={cover.icon} variant={cover.variant} class="aspect-[21/9] w-full" />
+  <CoverArt seed={post.id} icon={cover.icon} variant={cover.variant} class="h-32 w-full sm:h-40 lg:h-48" />
   <article class="mx-auto max-w-3xl px-5 py-16">
     <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
       <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/blog" class="hover:text-accent-700">Blog</a> /
