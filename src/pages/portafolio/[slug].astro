@@ -31,8 +31,6 @@ const idx = todos.findIndex((p) => p.id === proyecto.id);
 const siguiente = todos[(idx + 1) % todos.length];
 const cover = getPortfolioCover(proyecto.id);
 const embeds = getProjectEmbeds(proyecto.id);
-const needsFbSdk = embeds.some((e) => e.kind === 'fb-video' || e.kind === 'fb-post');
-const needsTiktokSdk = embeds.some((e) => e.kind === 'tiktok');
 ---
 
 <BaseLayout title={d.title} description={d.description} path={path} type="article" schemas={schemas}>
@@ -91,7 +89,7 @@ const needsTiktokSdk = embeds.some((e) => e.kind === 'tiktok');
         <div class="mt-14">
           <p class="eyebrow">Publicaciones reales</p>
           <h2 class="mt-2 font-display text-xl font-semibold text-ink-900">En redes de {d.empresa}</h2>
-          <div class="mt-5 grid gap-6 sm:grid-cols-2">
+          <div class="mt-5 flex flex-wrap gap-6">
             {embeds.map((embed) => (
               <SocialEmbed {...embed} />
             ))}
@@ -114,14 +112,4 @@ const needsTiktokSdk = embeds.some((e) => e.kind === 'tiktok');
       <a href="/contacto" class="mt-6 inline-block rounded-lg bg-accent-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-accent-600">Contacto</a>
     </div>
   </article>
-
-  {
-    needsFbSdk && (
-      <>
-        <div id="fb-root" />
-        <script is:inline async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v19.0" />
-      </>
-    )
-  }
-  {needsTiktokSdk && <script is:inline async src="https://www.tiktok.com/embed.js" />}
 </BaseLayout>
