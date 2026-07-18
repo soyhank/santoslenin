@@ -46,8 +46,16 @@ personal — SEO de entidad + AEO/GEO. **No vende servicios de consultoría.** E
 
 ## Despliegue
 
-- GitHub `soyhank/santoslenin` (público). Vercel scope `semcos-projects-9c0809c3`, usuario
-  `santosvilcachagua-6838`. Deploy por CLI (`vercel deploy --prod`) hasta conectar Git.
+- GitHub `soyhank/santoslenin` (público).
+- Deploy real desde esta máquina: cuenta Vercel `soyhank`, scope `soyhanks-projects`
+  (proyecto `santoslenin`, alias `santoslenin-zeta.vercel.app`). Deploy por CLI
+  (`vercel deploy --prod`).
+- Ojo: existe también un proyecto Vercel separado bajo scope `semcos-projects-9c0809c3` /
+  usuario `santosvilcachagua-6838` (el dominio real `santoslenin.com` apunta ahí) que
+  **no** se actualiza desde aquí — quedó desincronizado desde que se generó este repo.
+- **Instrucción del usuario:** al terminar cualquier tarea sobre este proyecto, hacer
+  automáticamente `git commit` + `git push` + `vercel deploy --prod` sin pedir
+  confirmación adicional (salvo que el cambio sea claramente arriesgado/destructivo).
 - Ver **PENDIENTES.md** para TODO_SANTOS, métricas y pasos de Search Console.
 
 ## Comandos
