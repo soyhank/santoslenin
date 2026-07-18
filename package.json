@@ -15,7 +15,6 @@
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/geist": "^5.2.9",
-    "@fontsource-variable/space-grotesk": "^5.2.10",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.4.5",

@@ -1,7 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverArt from '../../components/CoverArt.astro';
 import { articleSchema, breadcrumbSchema } from '../../lib/seo';
+import { getPortfolioCover } from '../../lib/covers';
 
 export async function getStaticPaths() {
   const proyectos = await getCollection('portafolio');
@@ -26,9 +28,11 @@ const schemas = [
 const todos = (await getCollection('portafolio')).sort((a, b) => a.data.orden - b.data.orden);
 const idx = todos.findIndex((p) => p.id === proyecto.id);
 const siguiente = todos[(idx + 1) % todos.length];
+const cover = getPortfolioCover(proyecto.id);
 ---
 
 <BaseLayout title={d.title} description={d.description} path={path} type="article" schemas={schemas}>
+  <CoverArt seed={proyecto.id} icon={cover.icon} variant={cover.variant} class="aspect-[21/9] w-full" />
   <article class="mx-auto max-w-3xl px-5 py-16">
     <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
       <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/portafolio" class="hover:text-accent-700">Portafolio</a> /

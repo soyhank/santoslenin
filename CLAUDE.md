@@ -18,8 +18,9 @@ personal — SEO de entidad + AEO/GEO. **No vende servicios de consultoría.** E
 
 - **Astro 6** + TypeScript estricto. JS de cliente mínimo (reveal observer + menú `<details>`).
 - **Tailwind v4** con `@tailwindcss/vite`; tema en `@theme` de `src/styles/global.css` (sin config).
-- Fuentes **self-hosted** (Fontsource, variable): Space Grotesk (display) / Geist (cuerpo) /
-  JetBrains Mono (datos). Sin CDNs de fuentes.
+- Fuentes **self-hosted** (Fontsource, variable): Geist para todo (display y cuerpo, distintos
+  pesos) / JetBrains Mono (datos). Sin CDNs de fuentes. Nada de Space Grotesk (se descartó por
+  parecer "de máquina de escribir").
 - **Content Collections** (Zod): `blog` (cluster `ia-marketing` | `geo-aeo`, `pillar`, `faq`) y `portafolio`.
 - `site: 'https://santoslenin.com'`.
 

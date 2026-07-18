@@ -2,8 +2,10 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RelatedContent from '../../components/RelatedContent.astro';
+import CoverArt from '../../components/CoverArt.astro';
 import { SITE } from '../../config/site';
 import { articleSchema, faqSchema, breadcrumbSchema } from '../../lib/seo';
+import { getBlogCover } from '../../lib/covers';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft && !data.pillar);
@@ -26,6 +28,7 @@ const schemas: Record<string, unknown>[] = [
 if (d.faq && d.faq.length) schemas.push(faqSchema(d.faq));
 
 const fmt = (date: Date) => date.toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
+const cover = getBlogCover(d.cluster);
 ---
 
 <BaseLayout
@@ -37,6 +40,7 @@ const fmt = (date: Date) => date.toLocaleDateString('es-PE', { year: 'numeric', 
   publishedTime={d.pubDate.toISOString()}
   modifiedTime={(d.updatedDate ?? d.pubDate).toISOString()}
 >
+  <CoverArt seed={post.id} icon={cover.icon} variant={cover.variant} class="aspect-[21/9] w-full" />
   <article class="mx-auto max-w-3xl px-5 py-16">
     <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
       <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/blog" class="hover:text-accent-700">Blog</a> /

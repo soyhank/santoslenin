@@ -3,9 +3,10 @@
 /*
  * Tailwind v4: el tema vive en CSS (sin tailwind.config).
  * Paleta COBALTO: base neutra fría + un único acento cobalto eléctrico.
- * Tipografía self-hosted (Fontsource, variable): Space Grotesk (display),
- * Geist (cuerpo — alta legibilidad, look moderno y confiable),
- * JetBrains Mono (datos / metric chips, el elemento firma).
+ * Tipografía self-hosted (Fontsource, variable): Geist para todo (display y
+ * cuerpo, diferenciados solo por peso) — alta legibilidad, look moderno y
+ * confiable, sin rasgos de máquina de escribir. JetBrains Mono queda solo
+ * para datos / metric chips, el elemento firma.
  */
 @theme {
   /* Tinta / texto */
@@ -29,7 +30,7 @@
   --color-accent-700: #1b34b8;
 
   /* Tipografía */
-  --font-display: 'Space Grotesk Variable', 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-sans: 'Geist Variable', 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 

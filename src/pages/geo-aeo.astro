@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RelatedContent from '../components/RelatedContent.astro';
+import CoverArt from '../components/CoverArt.astro';
 import { SITE } from '../config/site';
 import { articleSchema, faqSchema, breadcrumbSchema } from '../lib/seo';
+import { getBlogCover } from '../lib/covers';
 
+const cover = getBlogCover('geo-aeo');
 const path = '/geo-aeo';
 const title = 'GEO y AEO: cómo posicionar una marca en ChatGPT, Gemini y los motores de IA';
 const description =
@@ -63,6 +66,7 @@ const schemas: Record<string, unknown>[] = [
   publishedTime={pubDate.toISOString()}
   modifiedTime={updatedDate.toISOString()}
 >
+  <CoverArt seed={path} icon={cover.icon} variant={cover.variant} class="aspect-[21/9] w-full" />
   <article class="mx-auto max-w-3xl px-5 py-16">
     <nav aria-label="Migas de pan" class="mb-6 font-mono text-xs text-muted">
       <a href="/" class="hover:text-accent-700">Inicio</a> / <a href="/blog" class="hover:text-accent-700">Blog</a> /

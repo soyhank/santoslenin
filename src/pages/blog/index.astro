@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverArt from '../../components/CoverArt.astro';
 import { breadcrumbSchema } from '../../lib/seo';
+import { getBlogCover } from '../../lib/covers';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft && !data.pillar)).sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
@@ -13,8 +15,8 @@ const clusterLabel: Record<string, string> = {
 };
 
 const pilares = [
-  { href: '/ia-en-marketing', label: 'IA en marketing', desc: 'Guía pilar del cluster de inteligencia artificial aplicada al marketing.' },
-  { href: '/geo-aeo', label: 'GEO / AEO', desc: 'Guía pilar sobre posicionamiento en los motores de búsqueda con IA.' },
+  { href: '/ia-en-marketing', label: 'IA en marketing', desc: 'Guía pilar del cluster de inteligencia artificial aplicada al marketing.', cluster: 'ia-marketing' },
+  { href: '/geo-aeo', label: 'GEO / AEO', desc: 'Guía pilar sobre posicionamiento en los motores de búsqueda con IA.', cluster: 'geo-aeo' },
 ];
 
 const schemas = [
@@ -52,13 +54,19 @@ const fmt = (d: Date) => d.toLocaleDateString('es-PE', { year: 'numeric', month:
     <!-- Guías pilar -->
     <div class="mt-10 grid gap-5 md:grid-cols-2">
       {
-        pilares.map((p) => (
-          <a href={p.href} class="group rounded-2xl border border-accent-100 bg-accent-50/50 p-6 transition-all hover:-translate-y-1 hover:shadow-lg">
-            <p class="eyebrow">Guía pilar</p>
-            <h2 class="mt-2 font-display text-lg font-semibold text-ink-900 group-hover:text-accent-700">{p.label}</h2>
-            <p class="mt-2 text-sm text-muted">{p.desc}</p>
-          </a>
-        ))
+        pilares.map((p) => {
+          const cover = getBlogCover(p.cluster);
+          return (
+            <a href={p.href} class="group relative flex flex-col overflow-hidden rounded-2xl border border-accent-100 bg-accent-50/50 transition-all hover:-translate-y-1 hover:shadow-lg">
+              <CoverArt seed={p.href} icon={cover.icon} variant={cover.variant} class="aspect-[21/9] w-full transition-transform duration-500 group-hover:scale-105" />
+              <div class="p-6">
+                <p class="eyebrow">Guía pilar</p>
+                <h2 class="mt-2 font-display text-lg font-semibold text-ink-900 group-hover:text-accent-700">{p.label}</h2>
+                <p class="mt-2 text-sm text-muted">{p.desc}</p>
+              </div>
+            </a>
+          );
+        })
       }
     </div>
 
@@ -66,20 +74,31 @@ const fmt = (d: Date) => d.toLocaleDateString('es-PE', { year: 'numeric', month:
       posts.length === 0 ? (
         <p class="mt-12 text-muted">Pronto publicaré los primeros artículos.</p>
       ) : (
-        <div class="mt-12 grid gap-6 md:grid-cols-2">
-          {posts.map((post) => (
-            <article class="flex flex-col rounded-2xl border border-line bg-surface-pure p-7 transition-shadow hover:shadow-lg">
-              <div class="flex items-center gap-3 font-mono text-xs text-muted">
-                <span class="rounded bg-accent-50 px-2 py-0.5 font-medium text-accent-700">{clusterLabel[post.data.cluster]}</span>
-                <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
-              </div>
-              <h2 class="mt-3 font-display text-xl font-semibold text-ink-900">
-                <a href={`/blog/${post.id}`} class="hover:text-accent-700">{post.data.title}</a>
-              </h2>
-              <p class="mt-2 flex-1 text-sm text-muted">{post.data.description}</p>
-              <a href={`/blog/${post.id}`} class="mt-4 font-medium text-accent-700 hover:underline">Leer artículo →</a>
-            </article>
-          ))}
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => {
+            const cover = getBlogCover(post.data.cluster);
+            return (
+              <article class="reveal group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface-pure transition-all hover:-translate-y-1 hover:border-accent-500/50 hover:shadow-lg">
+                <a href={`/blog/${post.id}`} class="block">
+                  <CoverArt seed={post.id} icon={cover.icon} variant={cover.variant} class="aspect-[16/10] w-full transition-transform duration-500 group-hover:scale-105" />
+                </a>
+                <div class="flex flex-1 flex-col p-6">
+                  <div class="flex items-center gap-3 font-mono text-xs text-muted">
+                    <span class="rounded bg-accent-50 px-2 py-0.5 font-medium text-accent-700">{clusterLabel[post.data.cluster]}</span>
+                    <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+                  </div>
+                  <h2 class="mt-3 font-display text-lg font-semibold leading-snug text-ink-900">
+                    <a href={`/blog/${post.id}`} class="hover:text-accent-700">{post.data.title}</a>
+                  </h2>
+                  <p class="mt-2 flex-1 text-sm text-muted">{post.data.description}</p>
+                  <a href={`/blog/${post.id}`} class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent-700 group-hover:gap-2.5 transition-all">
+                    Leer artículo
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                  </a>
+                </div>
+              </article>
+            );
+          })}
         </div>
       )
     }

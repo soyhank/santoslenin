@@ -1,0 +1,81 @@
+---
+/**
+ * Banner ilustrativo 100% generado (SVG + degradados), sin fotografía.
+ * Evita depender de imágenes de terceros o inventar capturas de proyectos
+ * reales que no existen. Determinista por `seed`: mismo proyecto/artículo
+ * siempre produce el mismo gráfico, en listados y en su página de detalle.
+ */
+interface Props {
+  seed: string;
+  icon: 'cpu' | 'growth' | 'compass' | 'cap' | 'spark' | 'radar';
+  variant?: 'light' | 'dark';
+  class?: string;
+}
+const { seed, icon, variant = 'light', class: cls = '' } = Astro.props;
+
+function hash(s: string) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+const h = hash(seed);
+const rot = (h % 24) - 12;
+const bx = 18 + (h % 26);
+const by = 8 + ((h >> 3) % 24);
+const bx2 = 58 + ((h >> 5) % 28);
+const by2 = 38 + ((h >> 7) % 20);
+const uid = `cv-${h.toString(36)}`;
+
+const isDark = variant === 'dark';
+const gradFrom = isDark ? '#0c1424' : '#eef1ff';
+const gradTo = isDark ? '#1b34b8' : '#c7d2ff';
+const blobColor = isDark ? '#3a55ec' : '#2545e6';
+const blob2Color = isDark ? '#ffffff' : '#1b34b8';
+const iconColor = isDark ? '#ffffff' : '#16203a';
+const dotColor = isDark ? '#ffffff' : '#1b34b8';
+
+const icons: Record<Props['icon'], string> = {
+  cpu: '<rect x="8" y="8" width="8" height="8" rx="1"/><rect x="10.5" y="10.5" width="3" height="3" rx="0.5"/><line x1="8" y1="4" x2="8" y2="7"/><line x1="12" y1="4" x2="12" y2="7"/><line x1="16" y1="4" x2="16" y2="7"/><line x1="8" y1="17" x2="8" y2="20"/><line x1="12" y1="17" x2="12" y2="20"/><line x1="16" y1="17" x2="16" y2="20"/><line x1="4" y1="8" x2="7" y2="8"/><line x1="4" y1="12" x2="7" y2="12"/><line x1="4" y1="16" x2="7" y2="16"/><line x1="17" y1="8" x2="20" y2="8"/><line x1="17" y1="12" x2="20" y2="12"/><line x1="17" y1="16" x2="20" y2="16"/>',
+  growth: '<polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><polygon points="12,7 14.2,12 12,17 9.8,12"/>',
+  cap: '<polygon points="12,4 22,9 12,14 2,9"/><polyline points="6,11 6,15.5 12,18.5 18,15.5 18,11"/><line x1="22" y1="9" x2="22" y2="15"/>',
+  spark: '<path d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/>',
+  radar: '<circle cx="10.5" cy="10.5" r="7"/><circle cx="10.5" cy="10.5" r="3.2"/><line x1="15.5" y1="15.5" x2="21" y2="21"/>',
+};
+---
+
+<div class:list={['relative overflow-hidden', cls]} aria-hidden="true">
+  <svg viewBox="0 0 100 60" preserveAspectRatio="xMidYMid slice" class="h-full w-full">
+    <defs>
+      <linearGradient id={`grad-${uid}`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color={gradFrom} />
+        <stop offset="100%" stop-color={gradTo} />
+      </linearGradient>
+      <filter id={`blur-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="7" />
+      </filter>
+      <pattern id={`dots-${uid}`} width="7" height="7" patternUnits="userSpaceOnUse">
+        <circle cx="1" cy="1" r="0.6" fill={dotColor} opacity="0.35" />
+      </pattern>
+    </defs>
+
+    <rect width="100" height="60" fill={`url(#grad-${uid})`} />
+    <rect width="100" height="60" fill={`url(#dots-${uid})`} opacity={isDark ? 0.25 : 0.4} />
+
+    <g filter={`url(#blur-${uid})`}>
+      <circle cx={bx} cy={by} r="20" fill={blobColor} opacity="0.35" />
+      <circle cx={bx2} cy={by2} r="15" fill={blob2Color} opacity="0.18" />
+    </g>
+
+    <g
+      transform={`translate(50 30) rotate(${rot}) scale(1.9) translate(-12 -12)`}
+      fill="none"
+      stroke={iconColor}
+      stroke-width="1.15"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity="0.92"
+      set:html={icons[icon]}
+    />
+  </svg>
+</div>
