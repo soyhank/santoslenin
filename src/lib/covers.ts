@@ -76,6 +76,9 @@ export interface ProjectEmbed {
  * ningún video o foto, solo se referencia el post original.
  */
 const projectEmbeds: Record<string, ProjectEmbed[]> = {
+  'semcocad-b2b-autodesk': [
+    { kind: 'fb-post', url: 'https://www.facebook.com/photo?fbid=1392467376351485&set=a.560364912895073', caption: 'Publicación de SemcoCAD' },
+  ],
   'compass-expansion-eeuu': [
     { kind: 'fb-video', url: 'https://www.facebook.com/reel/1183651376714845', caption: 'Reel de Compass For Business' },
   ],

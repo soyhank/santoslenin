@@ -26,7 +26,9 @@ personal — SEO de entidad + AEO/GEO. **No vende servicios de consultoría.** E
 
 ## Diseño
 
-- Paleta **Cobalto** (acento `#2545E6`). Elemento firma: **metric chips** (`.chip` en monospace).
+- Paleta **Cobalto** (acento `#2545E6`). Elemento firma: **metric chips** (`.chip`). `.chip` y
+  `.eyebrow` usan Geist (no monospace) — el usuario pidió sacar cualquier rastro de letra
+  "de máquina de escribir"; JetBrains Mono queda solo para `.prose code`.
 - Clase `.eyebrow` para etiquetas de sección; `.prose` para contenido largo.
 
 ## SEO / AEO / GEO
