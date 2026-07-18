@@ -26,13 +26,6 @@ const canales = [
     href: SITE.redes.linkedin,
     desc: 'Conectemos y conversemos sobre oportunidades.',
   },
-  {
-    icon: 'youtube',
-    label: 'YouTube',
-    valor: 'Canal de contenido',
-    href: SITE.redes.youtube,
-    desc: 'Contenido sobre marketing, performance e IA.',
-  },
 ];
 ---
 
@@ -57,7 +50,7 @@ const canales = [
       </p>
     </div>
 
-    <div class="mt-12 grid gap-5 sm:grid-cols-3">
+    <div class="mt-12 grid gap-5 sm:grid-cols-2 max-w-2xl">
       {
         canales.map((c) => (
           <a

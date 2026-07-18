@@ -12,13 +12,14 @@ personal — SEO de entidad + AEO/GEO. **No vende servicios de consultoría.** E
 - Forma corta **"Santos Lenin"** solo en navegación.
 - **Prohibido** "Lenin Santos".
 - CTAs válidos: **"Ver portafolio"** y **"LinkedIn"**. Nada de "agenda una consulta" / "trabajemos juntos".
-- `sameAs`: solo LinkedIn y YouTube (sin GitHub).
+- `sameAs`: solo LinkedIn (sin YouTube, sin GitHub).
 
 ## Stack (no negociable)
 
 - **Astro 6** + TypeScript estricto. JS de cliente mínimo (reveal observer + menú `<details>`).
 - **Tailwind v4** con `@tailwindcss/vite`; tema en `@theme` de `src/styles/global.css` (sin config).
-- Fuentes **self-hosted** (Fontsource): Space Grotesk / Inter / JetBrains Mono. Sin CDNs de fuentes.
+- Fuentes **self-hosted** (Fontsource, variable): Space Grotesk (display) / Geist (cuerpo) /
+  JetBrains Mono (datos). Sin CDNs de fuentes.
 - **Content Collections** (Zod): `blog` (cluster `ia-marketing` | `geo-aeo`, `pillar`, `faq`) y `portafolio`.
 - `site: 'https://santoslenin.com'`.
 

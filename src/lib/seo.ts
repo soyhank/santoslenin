@@ -37,7 +37,7 @@ export function personSchema() {
     })),
     knowsAbout: [...SITE.knowsAbout],
     knowsLanguage: ['es', 'en'],
-    sameAs: [SITE.redes.linkedin, SITE.redes.youtube],
+    sameAs: [SITE.redes.linkedin],
   };
 }
 

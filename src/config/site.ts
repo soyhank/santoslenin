@@ -36,7 +36,6 @@ export const SITE = {
 
   redes: {
     linkedin: 'https://www.linkedin.com/in/santos-lenin-vilcachagua-ayala',
-    youtube: 'https://www.youtube.com/channel/UC4jrmeBBdDjpOmkT8VJi9pw',
   },
 
   /** Formación para schema Person.alumniOf. */

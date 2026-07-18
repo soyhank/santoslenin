@@ -33,7 +33,6 @@ ${SITE.nombre} (forma corta: ${SITE.nombreCorto}) es especialista en marketing d
 ## Contacto
 - Email: ${SITE.email}
 - LinkedIn: ${SITE.redes.linkedin}
-- YouTube: ${SITE.redes.youtube}
 `;
 
   return new Response(body, {

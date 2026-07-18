@@ -9,8 +9,9 @@ const d = proyecto.data;
 
 <a
   href={`/portafolio/${proyecto.id}`}
-  class="reveal group flex flex-col rounded-2xl border border-line bg-surface-pure p-6 transition-all hover:-translate-y-1 hover:border-accent-500/50 hover:shadow-lg"
+  class="reveal group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface-pure p-6 transition-all hover:-translate-y-1 hover:border-accent-500/50 hover:shadow-lg"
 >
+  <span class="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-accent-600 transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true"></span>
   <p class="eyebrow">{d.sector}</p>
   <h3 class="mt-2 font-display text-lg font-semibold leading-snug text-ink-900">
     {d.title}
