@@ -10,7 +10,7 @@ métricas a confirmar (`MÉTRICA BORRADOR`) y puesta en marcha de SEO.
 
 | Qué falta | Dónde | Acción |
 |---|---|---|
-| **Foto profesional** | `src/pages/index.astro:94` y `src/pages/sobre-mi.astro:46` | Subir `public/santos-lenin-vilcachagua.jpg` y reemplazar el placeholder de iniciales. Esta misma imagen alimenta el schema `Person.image`. |
+| ~~**Foto profesional**~~ | `src/pages/index.astro` y `src/pages/sobre-mi.astro` | ✅ Hecho: `public/santos-lenin-vilcachagua.jpg` subida (recorte original 640×640 extendido a 640×800 para cubrir el `aspect-[4/5]` sin recortar los hombros). |
 | **PDF del CV** | `src/pages/cv.astro:113` | Subir `public/cv-santos-lenin-vilcachagua.pdf`. El botón "Descargar PDF" ya apunta ahí. |
 | **Anécdota de IA/automatización** | `src/pages/ia-en-marketing.astro:205` | Completar un caso concreto (herramienta + resultado) para reforzar la sección de casos reales. Opcional pero recomendado para E-E-A-T. |
 

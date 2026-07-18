@@ -91,13 +91,17 @@ const fmt = (d: Date) => d.toLocaleDateString('es-PE', { year: 'numeric', month:
         </div>
       </div>
 
-      <!-- Retrato. [TODO_SANTOS: reemplazar por foto profesional en /public/santos-lenin-vilcachagua.jpg] -->
+      <!-- Retrato -->
       <div class="relative mx-auto w-full max-w-xs lg:max-w-none">
-        <div class="aspect-[4/5] overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-ink-900 to-accent-700 shadow-xl">
-          <div class="flex h-full flex-col items-center justify-center gap-3 text-white">
-            <span class="font-display text-6xl font-bold tracking-tight">SLV</span>
-            <span class="font-mono text-xs text-white/80">Lima · Perú</span>
-          </div>
+        <div class="aspect-[4/5] overflow-hidden rounded-3xl border border-line shadow-xl">
+          <img
+            src="/santos-lenin-vilcachagua.jpg"
+            width="640"
+            height="800"
+            alt={SITE.nombre}
+            class="h-full w-full object-cover"
+            loading="eager"
+          />
         </div>
         <span class="chip chip-strong absolute -bottom-3 -left-3 shadow-md">Performance + IA</span>
       </div>
