@@ -1,6 +1,6 @@
 /** Asigna el ícono/logo/color de marca del CoverArt de cada proyecto y cluster de blog. */
 
-type CoverIcon = 'cpu' | 'growth' | 'compass' | 'cap' | 'spark' | 'radar';
+type CoverIcon = 'cpu' | 'growth' | 'compass' | 'cap' | 'spark' | 'radar' | 'palette';
 type CoverVariant = 'light' | 'dark';
 
 interface PortfolioCover {
@@ -41,6 +41,13 @@ const portfolioCovers: Record<string, PortfolioCover> = {
     logoAlt: 'Logo de Academia Vonex',
     brandColor: '#fce117',
   },
+  'pennytax-brand-guidelines': {
+    icon: 'palette',
+    variant: 'dark',
+    logo: '/logos/pennytax.png',
+    logoAlt: 'Logo de Pennytax LLC',
+    brandColor: '#c0682c',
+  },
 };
 
 const fallbackPortfolioCover: PortfolioCover = {
@@ -65,9 +72,11 @@ export function getBlogCover(cluster: string) {
 }
 
 export interface ProjectEmbed {
-  kind: 'fb-video' | 'fb-post' | 'tiktok';
+  kind: 'fb-video' | 'fb-post' | 'tiktok' | 'press';
   url: string;
   caption: string;
+  /** Solo para 'press': nombre del medio, p. ej. "La República". */
+  source?: string;
 }
 
 /**
@@ -88,9 +97,36 @@ const projectEmbeds: Record<string, ProjectEmbed[]> = {
   'vonex-web-seo': [
     { kind: 'fb-post', url: 'https://www.facebook.com/photo/?fbid=1523820243123306&set=pb.100064860333008.-2207520000', caption: 'Publicación de Academia Vonex' },
     { kind: 'tiktok', url: 'https://www.tiktok.com/@tintaya_roly024/video/7257678540286528774', caption: 'Mención de Academia Vonex en TikTok' },
+    {
+      kind: 'press',
+      url: 'https://larepublica.pe/tendencias/2023/06/30/hablando-huevadas-vendio-pan-con-pollo-y-academia-la-beca-hasta-que-ingrese-a-sm-nos-enorgulleces-ricardo-mendoza-jorge-luna-evat-1503450',
+      caption: '"Hablando Huevadas": vendió pan con pollo y la academia le dio la beca hasta que ingrese a San Marcos',
+      source: 'La República',
+    },
   ],
 };
 
 export function getProjectEmbeds(id: string): ProjectEmbed[] {
   return projectEmbeds[id] ?? [];
+}
+
+export interface ProjectDocument {
+  href: string;
+  cover: string;
+  coverAlt: string;
+  label: string;
+}
+
+/** Documento propio (creado por Santos, no de terceros) para mostrar con PdfPreview. */
+const projectDocuments: Record<string, ProjectDocument> = {
+  'pennytax-brand-guidelines': {
+    href: '/docs/pennytax-brand-guidelines.pdf',
+    cover: '/pennytax-brand-cover.jpg',
+    coverAlt: 'Manual de marca de Pennytax LLC',
+    label: 'Ver manual de marca completo',
+  },
+};
+
+export function getProjectDocument(id: string): ProjectDocument | undefined {
+  return projectDocuments[id];
 }

@@ -22,7 +22,7 @@ ${SITE.nombre} (forma corta: ${SITE.nombreCorto}) es especialista en marketing d
 ## Páginas principales
 - [Inicio](${u}/): presentación y resumen profesional
 - [Sobre mí](${u}/sobre-mi): biografía, trayectoria y credenciales
-- [Portafolio](${u}/portafolio): proyectos liderados (SemcoCAD, Activa Capital, Compass For Business, Academia Vonex)
+- [Portafolio](${u}/portafolio): proyectos liderados (SemcoCAD, Activa Capital, Compass For Business, Academia Vonex, Pennytax LLC)
 - [CV](${u}/cv): currículum completo
 - [Contacto](${u}/contacto): correo y LinkedIn
 

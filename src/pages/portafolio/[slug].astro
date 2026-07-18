@@ -3,8 +3,9 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CoverArt from '../../components/CoverArt.astro';
 import SocialEmbed from '../../components/SocialEmbed.astro';
+import PdfPreview from '../../components/PdfPreview.astro';
 import { articleSchema, breadcrumbSchema } from '../../lib/seo';
-import { getPortfolioCover, getProjectEmbeds } from '../../lib/covers';
+import { getPortfolioCover, getProjectEmbeds, getProjectDocument } from '../../lib/covers';
 
 export async function getStaticPaths() {
   const proyectos = await getCollection('portafolio');
@@ -31,6 +32,7 @@ const idx = todos.findIndex((p) => p.id === proyecto.id);
 const siguiente = todos[(idx + 1) % todos.length];
 const cover = getPortfolioCover(proyecto.id);
 const embeds = getProjectEmbeds(proyecto.id);
+const doc = getProjectDocument(proyecto.id);
 ---
 
 <BaseLayout title={d.title} description={d.description} path={path} type="article" schemas={schemas}>
@@ -83,6 +85,14 @@ const embeds = getProjectEmbeds(proyecto.id);
     <div class="prose mt-10">
       <Content />
     </div>
+
+    {
+      doc && (
+        <div class="mt-10">
+          <PdfPreview href={doc.href} cover={doc.cover} coverAlt={doc.coverAlt} label={doc.label} />
+        </div>
+      )
+    }
 
     {
       embeds.length > 0 && (

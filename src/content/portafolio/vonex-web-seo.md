@@ -51,6 +51,18 @@ de SEO técnico y de contenido. En paralelo, puse en marcha las campañas de Met
 los flujos de email, midiendo el costo por lead y la contribución de cada canal para
 asignar el presupuesto donde rendía mejor.
 
+## Momento viral: la beca que llegó a la prensa
+
+Una alumna de Vonex se hizo conocida en redes por vender pan con pollo para costear sus
+estudios. El programa **"Hablando Huevadas"** (Ricardo Mendoza y Jorge Luna) recogió su
+historia, y la academia respondió otorgándole una beca completa. El momento se viralizó
+y terminó cubierto por medios como *La República*.
+
+Este tipo de momentos no se planea como una campaña de pauta: se construye dejando
+espacio para que la marca reaccione rápido y con autenticidad cuando surge una historia
+real. Esa reacción generó exposición de marca que ninguna campaña pagada hubiera
+comprado al mismo costo.
+
 ## Resultados
 
 <!-- MÉTRICA BORRADOR: confirmar con Santos -->
@@ -62,6 +74,8 @@ asignar el presupuesto donde rendía mejor.
 <!-- MÉTRICA BORRADOR: confirmar con Santos -->
 - Campañas de **Meta Ads y email marketing** ejecutadas con eficiencia presupuestal,
   maximizando el resultado por sol invertido.
+- **Cobertura de prensa y viralidad** (TikTok, Facebook y *La República*) a raíz de la
+  beca otorgada a la alumna, con exposición de marca 100 % orgánica.
 
 ## Aprendizajes
 

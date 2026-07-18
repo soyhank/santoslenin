@@ -17,7 +17,7 @@ import type { ProjectEmbed } from '../lib/covers';
 interface Props extends ProjectEmbed {
   class?: string;
 }
-const { kind, url, caption, class: cls = '' } = Astro.props;
+const { kind, url, caption, source, class: cls = '' } = Astro.props;
 const encoded = encodeURIComponent(url);
 ---
 
@@ -75,6 +75,29 @@ const encoded = encodeURIComponent(url);
       <p class="mt-4 text-sm text-white/90">{caption}</p>
       <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-white group-hover:gap-2.5 transition-all">
         Ver en TikTok
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
+  )
+}
+
+{
+  kind === 'press' && (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener"
+      class:list={['group flex w-80 flex-col justify-between overflow-hidden rounded-2xl border border-line bg-surface-pure p-6 transition-all hover:-translate-y-1 hover:border-accent-500/50 hover:shadow-lg', cls]}
+    >
+      <span class="grid h-11 w-11 place-items-center rounded-full bg-accent-50 text-accent-700">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 5h13a2 2 0 0 1 2 2v11a1 1 0 0 1-1 1H4V5z" /><path d="M19 8h1a1 1 0 0 1 1 1v9a1 1 0 0 1-2 0" /><line x1="7" y1="9" x2="14" y2="9" /><line x1="7" y1="12.5" x2="14" y2="12.5" /><line x1="7" y1="16" x2="11" y2="16" />
+        </svg>
+      </span>
+      {source && <p class="mt-4 eyebrow">{source}</p>}
+      <p class="mt-2 flex-1 font-display font-semibold leading-snug text-ink-900">{caption}</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-700 group-hover:gap-2.5 transition-all">
+        Leer nota
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </span>
     </a>

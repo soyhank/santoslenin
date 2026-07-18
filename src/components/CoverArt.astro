@@ -9,7 +9,7 @@
  */
 interface Props {
   seed: string;
-  icon?: 'cpu' | 'growth' | 'compass' | 'cap' | 'spark' | 'radar';
+  icon?: 'cpu' | 'growth' | 'compass' | 'cap' | 'spark' | 'radar' | 'palette';
   variant?: 'light' | 'dark';
   brandColor?: string;
   logo?: string;
@@ -45,6 +45,7 @@ const icons: Record<string, string> = {
   compass: '<circle cx="12" cy="12" r="9"/><polygon points="12,7 14.2,12 12,17 9.8,12"/>',
   cap: '<polygon points="12,4 22,9 12,14 2,9"/><polyline points="6,11 6,15.5 12,18.5 18,15.5 18,11"/><line x1="22" y1="9" x2="22" y2="15"/>',
   spark: '<path d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/>',
+  palette: '<path d="M12 3a9 9 0 1 0 8.5 12c.3-.9-.4-1.8-1.3-1.8h-2.2a2.5 2.5 0 0 1 0-5H19a2 2 0 0 0 2-2c0-3.9-4-6.2-9-6.2z"/><circle cx="8" cy="10.5" r="1.15"/><circle cx="7.7" cy="14.5" r="1.15"/><circle cx="11.5" cy="16.8" r="1.15"/>',
   radar: '<circle cx="10.5" cy="10.5" r="7"/><circle cx="10.5" cy="10.5" r="3.2"/><line x1="15.5" y1="15.5" x2="21" y2="21"/>',
 };
 ---
